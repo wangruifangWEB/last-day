@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		
+		<script>
+			function(){
+			var zhanghu_bottom=document.getElementsByClassName("zhanghu_bottom");
+			for (var i = 0; i < zhanghu_bottom.length;i++) {
+				$(".zhanghu_bottom").eq(i).css("display","none");
+				$(".zhanghu .click00").eq(i).css('background-image',"url(../images/bottom.png)");
+			}
+			var x=$(".zhanghu").index(this);
+			$(".zhanghu_bottom").eq(x).css('display','block');
+			$(".zhanghu .click00").eq(x).css('background-image',"url(../images/top.png)");
+			$('.zhanghu_bottom a').click(function(e){
+				   e.stopPropagation();
+				});
+		},function(){
+			var zhanghu_bottom=document.getElementsByClassName("zhanghu_bottom");
+			for (var i = 0; i < zhanghu_bottom.length;i++) {
+				$(".zhanghu_bottom").eq(i).css("display","none");
+				$(".zhanghu .click00").eq(i).css('background-image',"url(../images/bottom.png)");
+			}
+			var x=$(".zhanghu").index(this);
+			$(".zhanghu_bottom").eq(x).css('display','none');
+			$(".zhanghu .click00").eq(x).css('background-image',"url(../images/bottom.png)");
+		})
+	})
+		</script>
+	</body>
+</html>

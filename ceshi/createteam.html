@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/css.css"/>
+		<script src="__PUBLIC__/Home/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__PUBLIC__/Home/js/fontSize.js" type="text/javascript" charset="utf-8"></script>
+		
+		<style>
+			.outerScroller{
+				width: 7.5rem;
+				margin: 0 auto;
+				background-color: #efeff4;
+			}	
+			.scroll{
+				position: relative;
+				overflow: scroll;
+				background-color: #efeff4;
+			}
+			.swiper-container{
+				overflow: hidden;
+			}
+			header{
+				width: 7.5rem;
+				margin-left: -3.75rem;
+				left: 50%;
+				position: absolute;
+			}
+			.swiper-container, .w{height: calc(100vh - 60px);}
+			
+			.bm_bg{
+				background-color:#EFEFF4;	
+				font-family: PingFangSC-Regular, sans-serif;
+				/*overflow: scroll;*/		
+			}
+			.bm_border{
+				border-bottom:2px solid #F6F6F6;
+			}
+			.c_top{
+				padding-top:.32rem;
+			}
+			.tx_input{
+				border-bottom:2px solid rgba(158,158,158,.2)!important;
+			}
+		
+			input{
+				text-align: start!important;
+				padding:.4rem;
+				color:#595959!important;
+			}
+			.footer{
+				width: 7.5rem;
+				left: 50%;
+				margin-left: -3.75rem;
+				z-index:1000;
+			}
+			.alert_show{
+			    width: 5.60rem;
+			    height: 3.14rem;
+			    background: #F6F6F6;
+			    border-radius: .2rem;
+			    box-shadow:0 0.15rem 0.8rem #ccc;
+			    z-index: 1000;
+			    position: fixed;
+			    top: 50%;
+			    left: 50%;
+			    margin-left:-2.8rem;
+			    margin-top:-1.6rem;
+			}
+			.alert_show div.first{
+				width:2.82rem;
+				height:.9rem;
+				text-align: center;
+				margin:0 auto;
+			}
+			.alert_show div.first span{
+				font-weight: bold;
+			}
+			.alert_show p{
+				font-size:.32rem;
+				font-family: PingFangSC-Medium, sans-serif;
+				line-height:.45rem;
+			}
+			.alert_show div.second{
+				width:5.6rem;
+				height:.98rem;				
+				font-size:.32rem;
+				font-family: PingFangSC-Medium, sans-serif;
+				line-height:.95rem;
+				text-align: center;
+				font-weight: bold;
+			}
+			.alert_show .first_b{
+				height:2.16rem;
+				padding-top:.64rem;
+				box-shadow:0 2px 6px -2px #999;					
+			}
+			.radio_txt{		
+				position:absolute;
+				font-size:.32rem;
+				/*margin-top:.32rem;*/
+				margin-left:.7rem;
+			}
+
+			.radio_txt a{
+				color:#4ca3f8;
+				font-size:.32rem;
+				font-family: PingFangSC-Regular, sans-serif;
+				line-height:.45rem;
+				margin-top:.32rem;
+			}
+			.radio_txt span{
+				color:#595959;
+				font-size:.32rem;
+				height: 0.45rem;
+				font-family: PingFangSC-Regular, sans-serif;
+				line-height:.45rem;
+				margin-top:.32rem;
+			}
+			.radio_txt .c{
+				margin-top:.35rem;
+				width:.4rem;
+				height:.4rem;
+				margin-right:.16rem;
+				display: block;
+				float: left;	
+				background-size: cover;
+			}
+			.nr span{
+				color:#595959;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="outerScroller">
+			<form action="__CONTROLLER__/addteam/aid/<{$aid}>" method="post" id="subform" name="subform" enctype="multipart/form-data" >
+			<div class="scroll">
+				<header>
+					<div class="d-title">
+						<a href="#">
+							<img src="__PUBLIC__/Home/images/cd.png" alt="" />
+						</a>
+						<span>团队组建</span>
+					</div>
+				</header>
+		
+				<section class="width-box bg bm_bg">							
+						<div class="zl widthbox c_top">
+							
+							 <ul class="c">
+							 	<li>
+							 		<div><span id="teamN" style="color:#595959">团队名称</span><input type="text" name="team_name" id="teamname" value=""  onblur="CheckNull()"/></div>
+								 	</li>
+								 </ul>
+							</div>
+							
+							<div class="d-information widthbox">
+								
+								<div class="nr">
+									<span class="tx_input" id="userN">领队姓名</span>
+									<span class="tx_input" id="userT">手机号码</span>
+									<span class="usercard" id="userC">身份证号</span>
+								</div>
+							
+							<!--<div class="tx">
+								<input type="text" name="" id="username" value="" class="tx_input" />								
+								<input type="number" name="" id="usertel"  value="" class="tx_input" onblur="CheckNull()"/>
+								<input type="number" name="" id="usercard" value="" onblur="CheckNull()"/>
+							</div>-->
+							
+							<div class="tx">
+								<input type="text" name="user_name" id="username" value="" class="tx_input" onblur="CheckNull()"/>								
+								<input type="text" name="mobile" id="usertel"  value="" class="tx_input" onblur="CheckNull()"/>
+								<input type="text" name="id_number" id="usercard" value="" onblur="CheckNull()"/>
+							</div>
+						</div>
+						
+						<div class="radio_txt"><span class="c" style="background-image: url(__PUBLIC__/Home/images/Oval1.png)"></span>
+							<span style="position:relative;top:.32rem">我已阅读<a href="<{:U('Home/activity/explain',array('aid'=>$aid))}>">《免责说明》</a></span>
+						</div>	
+					</section>
+					
+					<div class="z-alert">
+						<ul>
+							<li>
+								<a href="#" class="active">徒步活动</a>
+							</li>
+							<li>
+								<a href="#">最美徒步</a>
+							</li>
+							<li>
+								<a href="#">健康指导</a>
+							</li>
+						</ul>
+					</div>
+				
+					<footer class="footer">
+						<ul class="bottom">
+							<li>
+								<a href="#">取消</a>
+							</li>
+							<li>
+								<a id="submit" href="#" name="submit" type="button">下一步</a>
+							</li>
+						</ul>
+					</footer> 			
+				</div>
+			</form>
+			</div>
+			<div class="alert_show alert_show1" style="display:none">
+				<div class="first_b">
+					<div class="first">
+						<p><span>手机号码</span>不对，</p>
+						<p>请重新填写。</p>
+					</div>
+				</div>
+				<div class="second">确认</div>
+			</div>
+			
+			<div class="alert_show alert_show2" style="display:none">
+				<div class="first_b">
+					<div class="first">
+						<p><span>身份证</span>不对，</p>
+						<p>请重新填写。</p>
+					</div>
+				</div>
+				<div class="second">确认</div>
+			</div>
+			
+			<div class="alert_show alert_show3" style="display:none">
+				<div class="first_b">									
+					<p style="text-align: center;">请填写领队姓名！</p>			
+				</div>
+				<div class="second">确认</div>
+			</div>
+				
+			<div class="alert_show alert_show5" style="display:none">
+				<div class="first_b">									
+					<p style="text-align: center;">请填写团队名称！</p>			
+				</div>
+				<div class="second">确认</div>
+			</div>
+				
+			<div class="alert_show alert_show4" style="display:none">
+				<div class="first_b">									
+					<p style="text-align: center;">请阅读并同意《负责说明》！</p>			
+				</div>
+				<div class="second">确认</div>
+			</div>
+		</div>
+	</div>
+	<div class="box-transparent"></div>	
+	<script>		
+		$('.z-alert').height($(window).height()-$('header').height())	
+	//表单验证
+		$('.bm_bg').height($(window).height()-$('footer').height());
+		function vail1(s1){
+			return s1.replace(/^1[34578]\d{9}$/g, "");
+		}
+		function vail2(s2){
+			return s2.replace(/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/, "");
+		}					
+		var CheckNull=function(){
+			var teamName = document.getElementById('teamname').value;
+		　　var userName = document.getElementById('username').value;
+			var userTel = document.getElementById('usertel').value;
+			var userCard =document.getElementById('usercard').value;
+			
+				
+			if(userName==''){				
+					//document.getElementById('userN').style.color='red';						
+					$('#username').focus();					
+					$('.alert_show3').show();						
+					$('.second').click(function(){							
+						$('.alert_show3').hide();
+					});						
+			}else{
+				document.getElementById('userN').style.color='#595959';	
+			}	
+			if(teamName==''){				
+						//document.getElementById('teamN').style.color='red';						
+						$('#teamname').focus();					
+						$('.alert_show5').show();						
+						$('.second').click(function(){							
+							$('.alert_show5').hide();
+						});						
+				}else{
+					document.getElementById('teamN').style.color='#595959';	
+				}	
+        	 if(vail1(userTel)){				
+					document.getElementById('userT').style.color='red';						
+					$('#usertel').focus();					
+					$('.alert_show1').show();						
+					$('.second').click(function(){							
+						$('.alert_show1').hide();
+					});						
+			}else{
+				document.getElementById('userT').style.color='#595959';	
+			}
+			
+			if(vail2(userCard)){				
+				document.getElementById('userC').style.color='red';															
+				$('.alert_show2').show();								
+				$('.second').click(function(){
+					$('.alert_show2').hide();
+				});	
+				$('#usercard').focus();
+			}else{
+				document.getElementById('userC').style.color='#595959';	
+			};
+				
+			if($('.radio_txt').hasClass('agree')){
+					$('.alert_show3').show();	
+				
+				$('.second').click(function(){
+					$('.alert_show3').hide();
+				});	
+			}
+		 
+		}								       
+		$.fn.toggle = function( fn ) {
+		    // Save reference to arguments for access in closure
+		    var args = arguments,
+		            guid = fn.guid || jQuery.guid++,
+		            i = 0,
+		            toggler = function( event ) {
+		                // Figure out which function to execute
+		                var lastToggle = ( jQuery._data( this, "lastToggle" + fn.guid ) || 0 ) % i;
+		                jQuery._data( this, "lastToggle" + fn.guid, lastToggle + 1 );
+		 
+		                // Make sure that clicks stop
+		                event.preventDefault();
+		 
+		                // and execute the function
+		                return args[ lastToggle ].apply( this, arguments ) || false;
+		            };
+		 
+		        // link all the functions, so any of them can unbind this click handler
+		    toggler.guid = guid;
+		    while ( i < args.length ) {
+		        args[ i++ ].guid = guid;
+		    }				 
+		    return this.click( toggler );
+		}
+		
+			$('.radio_txt .c').toggle(function(e){
+				$('.radio_txt .c').css('background-image','url(__PUBLIC__/Home/images/2.png)');// 选中
+				$('.radio_txt').addClass('agree');
+			},function(){					
+				$('.radio_txt .c').css('background-image','url(__PUBLIC__/Home/images/Oval1.png)');// 未选中
+				$('.radio_txt').removeClass('agree');
+			})	
+		
+		 $('#submit').click(function(ev){	
+		
+			var teamN = document.getElementById('teamN').value;
+			var userN = document.getElementById('username').value;;
+		 	var userTel = document.getElementById('usertel').value;
+			var userCard =document.getElementById('usercard').value;				
+					
+					if(userN==''){
+						document.getElementById('username').style.color='red';						
+									
+							$('.alert_show5').show();						
+							$('.second').click(function(){							
+								$('.alert_show5').hide();								
+							});				
+							$('#username').focus();	
+							return false;							
+					}
+					if(teamN==''){
+						document.getElementById('teamN').style.color='red';						
+							$('.alert_show3').show();						
+							$('.second').click(function(){							
+								$('.alert_show3').hide();								
+							});				
+							$('#teamN').focus();	
+							return false;
+							ev.preventDefault();
+					}
+					if(userTel==''){
+						document.getElementById('userT').style.color='red';						
+									
+							$('.alert_show1').show();						
+							$('.second').click(function(){							
+								$('.alert_show1').hide();								
+							});				
+							$('#usertel').focus();	
+							return false;							
+					}
+
+					if(userCard==''){
+						$('.alert_show2').show();							
+						$('.second').click(function(){
+							$('.alert_show2').hide();
+						});	
+						$('#usercard').focus();
+						return false;						
+					}
+					if(!($('.radio_txt').hasClass('agree'))){
+						$('.alert_show4').show();									
+							$('.second').click(function(){							
+							$('.alert_show4').hide();
+						});
+						return false;
+						e.preventDefault();
+					}else{
+						document.getElementById('subform').submit();return false
+					}				
+					
+				});
+			
+	</script>	
+	</div>
+	</div>
+	</body>	
+</html>

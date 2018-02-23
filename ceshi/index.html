@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>自定义动画</title>
+    <style>
+        div{
+            width: 100px;
+            height: 100px;
+            background:red;
+            position: absolute;
+            top: 50px;
+            color: #fff;
+            line-height: 100px;
+            text-align: center;
+        }
+    </style>
+    <script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+
+
+</head>
+<body>
+<div>既然我们总是擦肩</div>
+<div>那么思念有什么值得挂念</div>
+<div>我会用怀念的姿态</div>
+<div>回忆你的侧脸</div>
+<div>是怀念不是思念</div>
+<div>伊始的夏天</div>
+<div>蝉鸣的折叠</div>
+<div>崴蕤的夏天</div>
+<div>不愿承认</div>
+<!--<button>跑起来</button>-->
+</body>
+<script>
+    i=0;
+    $(window).on('ready',function test(){
+        $("div:eq("+i+")").animate({
+            width:'900px',
+            height:'600px',
+            lineHeight:'600px',
+            left:'500px',
+            fontSize:'80px'
+        },5000,function(){
+            i++;
+            //递归函数思想
+            $(this).delay(1000).hide(3000).next().animate(1000,test);
+        });
+    })
+</script>
+</html>

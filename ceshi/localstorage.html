@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title> html5本地缓存示例 </title>
+  <meta charset="utf-8">
+  <meta name="description" content="html5本地缓存示例">
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+ </head>
+ <body>
+ <script>
+  if(!window.localStorage){
+            alert("浏览器支持localstorage");
+        }else{
+            var storage=window.localStorage;
+            //写入a字段
+            storage["a"]=1;
+            //写入b字段
+            storage.a=1;
+            //写入c字段
+            storage.setItem("c",3);
+            //写入名字
+            storage.setItem("name",'mary');
+            console.log(typeof storage["a"]);
+            console.log(typeof storage["b"]);
+            console.log(typeof storage["c"]);
+            //读取某项
+            console.log( storage.getItem("c",3));
+            //清除指定项
+            storage.removeItem("c",3);
+            //清除所有localstorage
+           /* storage.clear();*/
+        }
+        	// 循环遍历出存储数据
+            for(var i=0;i<storage.length;i++){
+                var key=storage.key(i);
+                console.log(key);
+            }
+
+            var data={
+                name:'xiecanyong',
+                sex:'man',
+                hobby:'program'
+            };
+            var d=JSON.stringify(data);
+            storage.setItem("data",d);
+            //将JSON字符串转换成为JSON对象输出
+            var json=storage.getItem("data");
+            var jsonObj=JSON.parse(json);
+            console.log(typeof jsonObj);
+ </script>
+ </body>
+</html>

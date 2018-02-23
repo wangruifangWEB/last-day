@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+	</head>
+	<body>
+		
+		<script>
+			if ("WebSocket" in window) {
+			   alert("您的浏览器支持 WebSocket!");   
+			   // 打开一个 WebSocket
+			   var ws = new WebSocket("ws://localhost:9000");
+			   ws.onopen = function(){      
+			      // WebSocket 已连接上，使用 send() 方法发送数据
+			      ws.send("发送数据");
+			      alert("数据发送中...");
+			   };
+			   ws.onmessage = function (evt){
+			      // 监测信息
+			      var received_msg = evt.data;
+			      alert("数据已接收...");
+			   };
+			   ws.onclose = function(){      
+			      // 关闭 WebSocket
+			      alert("连接已关闭...");
+			   };
+			}else{   // 浏览器不支持 WebSocket
+			   alert("您的浏览器不支持 WebSocket!");
+			}
+		</script>
+		
+		<script>
+			const http = require('http');
+			const crypto = require("crypto");
+			const server = http.createServer((req, res) => {
+			   res.end();
+			});
+			
+			server.on('upgrade', (req, socket, head) => {
+			  // 获取请求头的信息，并处理
+			  let key = req.headers['sec-websocket-key'];
+			  key = crypto.createHash("sha1").update(key +  "258EAFA5-E914-47DA-95CA-C5AB0DC85B11").digest("base64");
+			  // 返回对应的Headers信息
+			  const headers = [
+			    'HTTP/1.1 101 Switching Protocols',
+			    'Upgrade: websocket',
+			    'Connection: Upgrade',
+			    'Sec-WebSocket-Accept: ' + key
+			  ];
+			  socket.setNoDelay(true);
+			  socket.write(headers.join("\r\n") + "\r\n\r\n", 'ascii');
+			});
+			
+			server.on('clientError', (err, socket) => {
+			  socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
+			});
+			
+			server.listen(9000);
+		</script>
+	</body>
+</html>

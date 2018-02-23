@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			//重载
+			function demo(){
+				switch (arguments.length){
+					case 0:
+					console.log(0);
+						break;
+						case 1:
+					console.log(1);
+						break;
+						case 2:
+					console.log(2);
+						break;
+					default:
+					console.log('default');
+						break;
+				}
+			}
+			demo('age','name');
+			
+			//递归
+			function sum(n){
+				if(n==1){
+					return n;
+				}else{
+					return n+arguments.callee(n-1);
+				}
+			}
+			console.log(sum(6));
+			
+			
+			function factorial(n){
+				 return n > 1 ? n * factorial(n-1) : 1;
+			}
+			factorial(5);//120
+			console.log(factorial(5));
+		</script>
+	</body>
+</html>
