@@ -1,0 +1,26 @@
+
+（一）-webkit-tap-highlight-color
+        这个属性只用于iOS (iPhone和iPad)。当你点击一个链接或者通过Javascript定义的可点击元素的时候，它就会出现一个半透明的灰色背景。要重设这个表现，你可以设置-webkit-tap-highlight-color为任何颜色。
+想要禁用这个高亮，设置颜色的alpha值为0即可。
+示例：设置高亮色为50%透明的红色:
+-webkit-tap-highlight-color: rgba(255,0,0,0.5);
+浏览器支持: 只有iOS(iPhone和iPad).
+
+（二）css3中-webkit-text-size-adjust详解：      
+1、当样式表里font-size<12px时，中文版chrome浏览器里字体显示仍为12px，这时可以用 html{-webkit-text-size-adjust:none;}
+2、-webkit-text-size-adjust放在body上会导致页面缩放失效
+3、body会继承定义在html的样式
+4、用-webkit-text-size-adjust不要定义成可继承的或全局的
+
+(三)outline：none
+	(1)在pc端为a标签定义这个样式的目的是为了取消ie浏览器下点击a标签时出现的虚线。ie7及以下浏览器还不识别此属性，需要在a标签上添加hidefocus="true"
+	(2)input，textarea{outline:none}  取消chrome下默认的文本框聚焦样式
+	(3)在移动端是不起作用的，想要去除文本框的默认样式可以使用-webkit-appearance，
+		聚焦时候默认样式的取消是-webkit-tap-highlight-color。看到一些移动端reset文件加了此属性，其实是多余。
+（四）webkit-appearance   -webkit-appearance: none;  
+ 	//消除输入框和按钮的原生外观，在iOS上加上这个属性才能给按钮和输入框自定义样式 。   
+ 	注意：不同type的input使用这个属性之后表现不一。text、button无样式，radio、checkbox直接消失
+（五）.-webkit-user-select   -webkit-user-select: none; 
+	// 禁止页面文字选择 ，此属性不继承，一般加在body上规定整个body的文字都不会自动调整
+（六）-webkit-touch-callout   -webkit-touch-callout:none; 
+ 	// 禁用长按页面时的弹出菜单(iOS下有效) ,img和a标签都要加

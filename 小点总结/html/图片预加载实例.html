@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+#ul1 {margin: 100px auto 0; padding: 0;}
+li {float: left; margin:0 0 10px 10px; list-style:none; border: 1px solid black;}
+img {width: 290px; height: 400px; display: block;}
+</style>
+<script>
+window.onload = function() {
+    
+    var oUl = document.getElementById('ul1');
+    var aImg = oUl.getElementsByTagName('img');
+    
+    showImage();
+    
+    window.onscroll = showImage;
+    
+    function showImage() {
+
+        var scrollTop  = document.documentElement.scrollTop || document.body.scrollTop;
+
+        for (var i=0; i<aImg.length; i++) {
+            
+            if ( !aImg[i].isLoad && getTop(aImg[i]) < scrollTop + document.documentElement.clientHeight ) {
+                aImg[i].src = aImg[i].getAttribute('_src');
+                aImg[i].isLoad = true;
+            }
+            
+        }
+        
+    }
+    
+    function getTop(obj) {
+        var iTop = 0;
+        while(obj) {
+            iTop += obj.offsetTop;
+            obj = obj.offsetParent;
+        }
+        return iTop;
+    }
+    
+}
+</script>
+</head>
+
+<body>
+    <ul id="ul1">
+        <li><img _src="../images/image1.jpg" src="../images/rabbit.png" /></li>
+        <li><img _src="../images/image2.jpg" src="../images/rabbit.png" /></li>
+        <li><img _src="../images/image1.jpg" src="../images/rabbit.png" /></li>
+        <li><img _src="../images/image2.jpg" src="../images/rabbit.png" /></li>
+        <li><img _src="../images/image1.jpg" src="../images/rabbit.png" /></li>
+        <li><img _src="../images/image2.jpg" src="../images/rabbit.png" /></li>
+        <li><img _src="../images/image3.jpg" src="../images/rabbit.png" /></li>
+        <li><img _src="../images/image1.jpg" src="../images/rabbit.png" /></li>
+        <li><img _src="../images/image2.jpg" src="../images/rabbit.png" /></li>
+    </ul>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../js/jquery.min.js"></script>
+	</head>
+	<style>
+		li.on {
+			color: red;
+		}
+	</style>
+
+	<body>
+		<ul>
+			<li str='20171119'>20171119</li>
+			<li str='20171120'>20171120</li>
+			<li str='20171121'>20171121</li>
+			<li str='20171122'>20171122</li>
+			<li str='20171123'>20171123</li>
+			<li str='20171124'>20171124</li>
+			<li str='20171125'>20171125</li>
+			<li str='20171126'>20171126</li>
+			<li str='20171127'>20171127</li>
+			<li str='20171216'>20171228</li>
+			<li str='20171217'>20171217</li>
+			<li str='20171218'>20171218</li>
+			<li str='20171219'>20171219</li>
+			<li str='20171221'>20171221</li>
+			<li str='20171222'>20171222</li>
+			<li str='20171223'>20171223</li>
+		</ul>
+	</body>
+</html>
+<script type="text/javascript">
+	$(function() {
+		var show_Num = show1();
+		var li_Str = [];
+		$("li").each(function(n, value) {
+			li_Str.push($(this).attr('str'))
+		})
+		//  获取今天方法
+		function show1() {
+			var mydate = new Date();
+			var str = "" + mydate.getFullYear();
+			str += (mydate.getMonth() + 1);
+			str += mydate.getDate();
+			return str;
+		}
+		//  排序方法
+		function sortNumber(a, b) {
+			return a - b
+		}
+		if($.inArray(show_Num, li_Str)>1) { 
+			$('li').eq($.inArray(show_Num, li_Str)).addClass('on')
+		} else {
+			li_Str.push(show_Num)
+			li_Str.sort(sortNumber)
+			$('li').eq($.inArray(show_Num, li_Str)).addClass('on')
+		};
+		
+		//定义数组
+		var current=show1();
+		var arr=[1,-1,4,8,0];
+		//从小到大排序
+		var arrSort=arr.sort(function(a,b){return a-b;}); 
+		/*console.log('排完序之后的：'+arrSort);*/
+		//比如查0
+		var index = arr.indexOf(current);
+		var result = current-arr[index-1] < arr[index+1]-current ? arr[index-1] : arr[index+1];
+		/*console.log(result);*/
+	});
+	
+	
+</script>
+
+<script>
+	function ar(n){
+		//缓存数组
+		var arr=[];
+		for(i=2;i<n;i++){
+			console.log(i*(i-1));
+			var num=i*(i-1);
+			arr.push(num);
+			for(var j=0;j<arr.length;j++){
+				var array1=arr[j]*arr[j-1];
+				console.log(array1);
+			}
+		}
+		return array1;
+	}
+	ar(9);
+	
+	console.log(9*8*7*6*5*4*3*2*1);
+</script>

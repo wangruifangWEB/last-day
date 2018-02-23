@@ -1,0 +1,23 @@
+.header{ height:120px; width:100%; 
+  background-color:#ccc;}
+.list{ width:750rpx; font-family:"微软雅黑";
+ height:200px; background-color:#090;}
+.list .left{ width:200rpx; overflow:auto;
+  height:100%;background:#f00;float:left;}
+  .list .left view{
+   line-height:16px; font-size:13px; 
+   text-align:center; padding:30rpx 10rpx 30rpx 0;
+   width:190rpx; color:#aaa;
+   border-left:2px solid transparent;
+   border-bottom:1px solid #ccc;
+   background-color:#ddd;
+  }
+  .list .left .active{ 
+   background-color:#fff;
+   font-weight:900;
+   border-left:2px solid #06f;}
+.list .right{ width:550rpx; overflow:auto;
+height:100%;bakcgound:#009;float:left;}
+.list .right .one{
+ width:100%; min-height:100%;
+}

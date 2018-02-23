@@ -1,0 +1,65 @@
+<!--index.wxml-->
+<view class="container">
+   <view class="header"></view>
+   <view class="list" style="height:{{h}}">
+     <view class="left">
+
+	<block wx:for="{{lan}}" wx:key="">
+	    <view class="{{brr[index]}}"
+		bindtap="a1" data-xy="{{index}}">
+		{{item}}
+		</view>
+	</block>
+
+<!---
+       <view class="{{brr[0]}}"
+        bindtap="a1" data-xy="0">热销</view>
+       <view class="{{brr[1]}}"
+        bindtap="a1" data-xy="1">优惠张三李四王五</view>
+       <view class="{{brr[2]}}"
+        bindtap="a1" data-xy="2">季节</view>
+
+       <view class="{{brr[3]}}"
+        bindtap="a1" data-xy="3">凉菜</view>
+       <view class="{{brr[4]}}"
+        bindtap="a1" data-xy="4">热菜李四王五</view>
+       <view class="{{brr[5]}}"
+        bindtap="a1" data-xy="5">设计</view>
+
+       <view class="{{brr[6]}}"
+        bindtap="a1" data-xy="6">就</view>
+       <view class="{{brr[7]}}"
+        bindtap="a1" data-xy="7">三李四王五</view>
+       <view class="{{brr[8]}}"
+        bindtap="a1" data-xy="8">季节</view>
+
+        <view class="{{brr[9]}}"
+        bindtap="a1" data-xy="9">热销</view>
+       <view class="{{brr[10]}}"
+        bindtap="a1" data-xy="10">优惠张三李四王五</view>
+       <view class="{{brr[11]}}"
+        bindtap="a1" data-xy="11">季节</view>
+    -->
+     
+     </view>
+     <view class="right">
+      <view class="one" wx:if="{{p==0}}">1</view>
+      <view class="one" wx:elif="{{p==1}}">2</view>
+      <view class="one" wx:elif="{{p==2}}">3</view>
+
+     <view class="one" wx:elif="{{p==3}}">4</view>
+     <view class="one" wx:elif="{{p==4}}">5</view>
+     <view class="one" wx:elif="{{p==5}}">9</view>
+     
+     <view class="one" wx:elif="{{p==6}}">6</view>
+     <view class="one" wx:elif="{{p==7}}">7</view>
+     <view class="one" wx:elif="{{p==8}}">8</view>
+
+     <view class="one" wx:elif="{{p==9}}">9</view>
+     <view class="one" wx:elif="{{p==10}}">10</view>
+     <view class="one" wx:elif="{{p==11}}">11</view>
+     </view>
+   </view>
+
+
+</view>

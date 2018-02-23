@@ -1,0 +1,39 @@
+<!DOCTYPE html>    
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">
+    <title>高度坍塌</title>  
+    <style>  
+        .div1 {  
+            border: 1px solid #ccc;        
+        }
+        .div1:after {           
+            content: '';           
+            display: block;            
+            height: 0;            
+            visibility: hidden;            
+            clear: both;        
+         }
+        .div2 {            
+            width: 100px;            
+            height: 100px;            
+            margin: 5px;            
+            background-color: orange;            
+            float: left;        
+        }
+    </style>
+    <!--[if IE]>  
+    <style> 
+        .div1 { 
+            zoom:1;/*触发hasLayout*/  
+            display:block;  
+        }  
+    </style>  
+    <![end]-->
+</head>  
+<body>  
+    <div class="div1">  
+        <div class="div2"></div>  
+    </div>  
+</body>  
+</html>

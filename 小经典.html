@@ -1,0 +1,943 @@
+<h1>代码摘记--每日一练</h1>
+	<!-- 今日学习内容-H5移动端知识点总结 -->
+		<!--一、移动端开发基本知识点  -->
+		<!--1、使用rem做单位 -->
+			<!-- 
+				html{font-size:100px}
+				@media(min-width:320px ){{font-size:100px}}
+				@media(min-width:360px ){{font-size:112.5px}}
+				@media(min-width:400px ){{font-size:125px}}
+				@media(min-width:640px ){{font-size:200px}} 
+				给手机设置100px的字体大小; 对于320px的手机匹配是100px，
+				其他手机都是等比例匹配; 因此设计稿上是多少像素的话，
+				那么转换为rem的时候，rem = 设计稿的像素/100 即可;
+			-->
+
+		<!--2.禁用a,button,input,optgroup,select,textarea等标签背景变暗 -->
+			<!-- a,button,optgroup,select,textarea{
+				-webkit-tap-highlight-color:rgba(0,0,0,0);
+			} -->
+
+		<!-- 3、meta基础知识点 -->
+			<!-- 1.页面窗口自动调整到设备宽度，并禁止用户及缩放页面。
+				<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0,maximum-scale=1.0, user-scalable=0" />
+
+				属性基本含义：
+				  content="width=device-width：
+				  控制 viewport 的大小,
+				  device-width 为设备的宽度
+				  initial-scale - 初始的缩放比例
+				  minimum-scale - 允许用户缩放到的最小比例
+				  maximum-scale - 允许用户缩放到的最大比例
+				  user-scalable - 用户是否可以手动缩放
+
+				 2.忽略将页面中的数字识别为电话号码
+					<meta name="format-detection" content="telephone=no" />
+
+				3. 忽略Android平台中对邮箱地址的识别
+					<meta name="format-detection" content="email=no" />
+
+				4. 当网站添加到主屏幕快速启动方式，可隐藏地址栏，仅针对ios的safari
+					<meta name="apple-mobile-web-app-capable" content="yes" />
+
+				5. 将网站添加到主屏幕快速启动方式，仅针对ios的safari顶端状态条的样式
+					<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+					可选default、black、black-translucent 
+				6. 需要在网站的根目录下存放favicon图标，防止404请求(使用fiddler可以监听到)，在页面上需加link如下：
+					<link rel="shortcut icon" href="/favicon.ico">
+			 -->
+			<!--四：移动端如何定义字体font-family
+					body{font-family: "Helvetica Neue", Helvetica, sans-serif;
+					}
+			
+				五：在android或者IOS下 拨打电话代码如下：
+					<a href="tel:15602512356">打电话给:15602512356</a>
+			
+				六：发短信(winphone系统无效)
+			
+					<a href="sms:10010">发短信给: 10010</a>
+			
+				七：调用手机系统自带的邮件功能
+					1. 当浏览者点击这个链接时，浏览器会自动调用默认的客户端电子邮件程序，并在收件人框中自动填上收件人的地址下面
+					<p><a href="mailto:tugenhua@126.com">发电子邮件</a></p>
+	
+					2、填写抄送地址;
+					在IOS手机下：在收件人地址后用?cc=开头;
+					如下代码：
+					<p><a href="mailto:tugenhua@126.com?cc=879083421@qq.com">填写抄送地址</a></p>
+	
+					在android手机下，如下代码：
+					<p><a href="mailto:tugenhua@126.com?879083421@qq.com">填写抄送地址</a></p>
+	
+					3. 填上密件抄送地址，如下代码：
+					在IOS手机下：紧跟着抄送地址之后，写上&bcc=，填上密件抄送地址
+					<a href="mailto:tugenhua@126.com?cc=879083421@qq.com&bcc=aa@qq.com">填上密件抄送地址</a>
+					在安卓下;如下代码：
+					<p><a href="mailto:tugenhua@126.com?879083421@qq.com?aa@qq.com">填上密件抄送地址</a></p>
+	
+					4. 包含多个收件人、抄送、密件抄送人，用分号隔(;)开多个收件人的地址即可实现。如下代码：
+					<p><a href="mailto:tugenhua@126.com;879083421@qq.com;aa@qq.com">包含多个收件人、抄送、密件抄送人，用分号隔(;)开多个收件人的地址即可实现</a></p>
+	
+					5、包含主题，用?subject=可以填上主题。如下代码：
+					<p><a href="mailto:tugenhua@126.com?subject=【邀请函】">包含主题，可以填上主题</a></p>
+	
+					6、包含内容，用?body=可以填上内容(需要换行的话，使用%0A给文本换行)；代码如下：
+					<p><a href="mailto:tugenhua@126.com?body=我来测试下">包含内容，用?body=可以填上内容</a></p>
+	
+					7. 内容包含链接，含http(s)://等的文本自动转化为链接。如下代码：
+					<p><a href="mailto:tugenhua@126.com?body=http://www.baidu.com">内容包含链接，含http(s)://等的文本自动转化为链接</a></p>
+	
+				八：webkit表单输入框placeholder的颜色值改变：
+					如果想要默认的颜色显示红色，代码如下：
+					input::-webkit-input-placeholder{color:red;}
+					如果想要用户点击变为蓝色，代码如下：
+					input:focus::-webkit-input-placeholder{color:blue;}
+			
+				九：移动端IOS手机下清除输入框内阴影，代码如下
+					input,textarea {
+					   -webkit-appearance: none;
+					}
+			
+				十：在IOS中 禁止长按链接与图片弹出菜单
+			
+					a, img {
+					   -webkit-touch-callout: none; 
+					} -->
+
+		<!-- 二、calc基本语法 -->	
+			<!-- calc基本语法 -->
+				<!--
+				 .class{width:calc(expression)}
+				它可以支持加，减，乘，除; 在我们做手机端的时候非常有用的一个知识点; 
+
+				优点如下：
+					1. 支持使用 "+","-","*" 和 "/" 四则运算。
+					2. 可以混合使用百分比(%),px,em,rem等作为单位可进行计算。
+					浏览器的兼容性有如下：
+					IE9+，FF4.0+，Chrome19+，Safari6+
+					如下测试代码：
+					<div class="calc">我是测试calc</div>
+					.calc{
+					    margin-left:50px;
+					    padding-left:2rem;
+					    width:calc(100%-50px-2rem);
+					    height:10rem;
+					}
+				-->
+ 		<!-- 禁用 radio 和 checkbox 默认样式
+			input[type="radio"]::-ms-check,input[type="checkbox"]::-ms-check{
+			display: none;/*这样就可以用class自定义样式*/
+			} 
+
+			webkit表单输入框placeholder的颜色值
+			input::-webkit-input-placeholder{color:#999;}
+			input:focus::-webkit-input-placeholder{color:#999;}
+
+			手机上的多行省略
+			.overflow-hidden{
+				display: box !important;
+				display: -webkit-box !important;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 4;/*第几行出现省略号*/
+				/*text-align:justify;不能和溢出隐藏的代码一起写，会有bug*/
+			}
+
+			<button></button>元素一定要写上type属性不然会默认提交表单，出现想不到的bug
+			某些安卓手机的自带浏览器不识别onkeydown onkeypress onkeyup事件，这些事件会导致不能输入汉字
+			input框若是不想输入文字 只能读不能写可以加readonly属性
+			手机上用背景图写运动，如果需要背景图定位来实现运动效果可以用rem进行计算后加上basckground-size:图的个数*100% 0；
+			写背景图时最好加上top left 或者0 0 不然写运动效果时容易出现跳
+			
+			弹层的关闭事件容易触发弹层关闭后下一层的事件所以要给弹层关闭事件加上event.preventDefault()
+			弹层弹出后不允许屏幕滚动给弹层加mousemove事件event.preventDefault()
+			面包屑导航如果按照bootstrap给li加：after伪元素的话在其他浏览器和在UC浏览器中表现的不一样，UC的的会比其他的浏览器宽，所占位置更多
+			 
+			如果一个手机看到的和其他手机不一样 会比其他的手机大或者小，查看他的浏览器字体设置是否正常，应该是他把手机浏览的字号调小或者调大了（坑人的所谓的bug）
+			IOS手机中如果出现一个元素的层级非常高可还是被别的元素遮盖的，那么就将该元素与别的元素同级
+			 
+			苹果手机固定定位有bug 检查html和body是不是设置了overflow-x:hidden;
+
+			-->
+		<!-- 三、移动端常见的一些兼容性问题 -->
+			<!-- 
+			随着手机的普及，移动端的开发也成了一个重要的方向，但由于设备的不统一会造成一些兼容性问题，
+			1、安卓浏览器看背景图片，有些设备会模糊。
+			用同等比例的图片在PC机上很清楚，但是手机上很模糊，原因是什么呢？
+			经过研究，是devicePixelRatio作怪，因为手机分辨率太小，如果按照分辨率来显示网页，这样字会非常小，所以苹果当初就把iPhone 4的960*640分辨率，在网页里只显示了480*320，这样devicePixelRatio＝2。现在android比较乱，有1.5的，有2的也有3的。
+			想让图片在手机里显示更为清晰，必须使用2x的背景图来代替img标签（一般情况都是用2倍）。例如一个div的宽高是100*100，背景图必须得200*200，然后background-size:contain;，这样显示出来的图片就比较清晰了。
+			代码可以如下：
+
+			background:url(../images/icon/all.png) no-repeat center center;
+
+			-webkit-background-size:50px 50px;
+
+			background-size: 50px 50px;display:inline-block; width:100%; height:50px; 
+			或者指定 background-size:contain;都可以，大家试试！
+			2、图片加载
+			若您遇到图片加载很慢的问题，对这种情况，手机开发一般用canvas方法加载：
+			具体的canvas API 参见：http://javascript.ruanyifeng.com/htmlapi/canvas.html
+			下面举例说明一个canvas的例子：
+			<li><canvas></canvas></li>
+			js动态加载图片和li 总共举例17张图片！
+			vartotal=17; 
+			varzWin=$(window); 
+			varrender=function(){
+			  varpadding=2; 
+			  varwinWidth=zWin.width(); 
+			  varpicWidth=Math.floor((winWidth-padding*3)/4); 
+			  vartmpl ='';
+			  for(vari=1;i<=totla;i++){ 
+			     varp=padding; 
+			     varimgSrc='img/'+i+'.jpg';
+			     if(i%4==1){
+			        p=0;
+			     }
+			  tmpl +='<li style="width:'+picWidth+'px;height:'+picWidth+'px;padding-left:'+p+'px;padding-top:'+padding+'px;"><canvas id="cvs_'+i+'"></canvas></li>';
+			  varimageObj = newImage(); 
+			  imageObj.index = i; 
+			  imageObj.onload = function(){
+			    varcvs =$('#cvs_'+this.index)[0].getContext('2d');
+			    cvs.width = this.width;
+			    cvs.height=this.height;
+			    cvs.drawImage(this,0,0);
+			  }
+			  imageObj.src=imgSrc;
+			  }
+			}
+			render();
+			3、假如手机网站不用兼容IE浏览器，一般我们会使用zeptojs。
+			zeptojs内置Touch events方法，具体可以看http://zeptojs.com/#Touch events
+			看了一下zeptio新版的API，已经支持IE10以上浏览器，对zeptojs可以选择使用！
+			4、防止手机中网页放大和缩小。
+			这点是最基本的，最为手机网站开发者来说应该都知道的，就是设置meta中的viewport
+			还有就是，有些手机网站我们看到如下声明：
+			代码如下:
+			<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+
+			设置了DTD的方式是XHTML的写法，假如我们页面运用的是html5，可以不用设置DTD,直接声明<!DOCTYPE html>。
+			使用viewport使页面禁止缩放。 通常把user-scalable设置为0来关闭用户对页面视图缩放的行为。
+			<meta name="viewport"content="user-scalable=0"/>
+			但是为了更好的兼容，我们会使用完整的viewport设置。
+			复制代码代码如下:
+			<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+			当然，user-scalable=0,有的人也写成user-scalable=no，都可以的。
+			5、apple-mobile-web-app-capable
+			apple-mobile-web-app-capable是设置Web应用是否以全屏模式运行。
+			语法：
+			<meta name="apple-mobile-web-app-capable"content="yes">
+			说明：
+			如果content设置为yes，Web应用会以全屏模式运行，反之，则不会。content的默认值是no，表示正常显示。你可以通过只读属性window.navigator.standalone来确定网页是否以全屏模式显示。
+			6、format-detection
+			format-detection 启动或禁用自动识别页面中的电话号码。
+			语法：
+			<meta name="format-detection"content="telephone=no">
+			说明：
+			默认情况下，设备会自动识别任何可能是电话号码的字符串。设置telephone=no可以禁用这项功能。
+			7、html5调用安卓或者ios的拨号功能
+			html5提供了自动调用拨号的标签，只要在a标签的href中添加tel:就可以了。
+			如下：
+			<ahref="tel:4008106999,1034">400-810-6999 转 1034</a>
+			拨打手机直接如下
+			 <a href="tel:15677776767">点击拨打15677776767</a>
+			8、html5GPS定位功能
+			具体请看：http://www.jb51.net/post/html5_GPS_getCurrentPosition
+			9、上下拉动滚动条时卡顿、慢
+			body {-webkit-overflow-scrolling:
+			 touch; overflow-scrolling: touch;}
+
+			Android3+和iOS5+支持CSS3的新属性为overflow-scrolling
+			10、禁止复制、选中文本
+			Element {-webkit-user-select:none;
+			  -moz-user-select:none;
+			  -khtml-user-select:none;
+			   user-select:none;
+			}
+			解决移动设备可选中页面文本(视产品需要而定)
+			11、长时间按住页面出现闪退
+			element {
+
+			  -webkit-touch-callout:none;
+
+			}
+
+			12、iphone及ipad下输入框默认内阴影
+			Element{
+			  -webkit-appearance:none;
+			}
+			13、ios和android下触摸元素时出现半透明灰色遮罩
+			Element {
+			  -webkit-tap-highlight-color:rgba(255,255,255,0)
+			}
+			设置alpha值为0就可以去除半透明灰色遮罩，备注：transparent的属性值在android下无效。
+			后面一篇文章有详细介绍，地址：http://www.jb51.net/post/phone_web_ysk
+			14、active兼容处理 即 伪类 :active 失效
+			方法一：body添加ontouchstart
+			<body ontouchstart="">
+			方法二：js给 document 绑定 touchstart 或 touchend 事件
+			<style>
+			   a {
+			     color:#000;
+			   }
+			   a:active {
+			      color:#fff;
+			    }
+			    </style>
+			    <a herf=foo >bar</a>
+			 <script>
+			    document.addEventListener('touchstart',function(){},false);
+			</script>
+			15、动画定义3D启用硬件加速
+			Element {
+			  -webkit-transform:translate3d(0,0,0)
+			  transform: translate3d(0,0,0);
+			}
+			注意：3D变形会消耗更多的内存与功耗
+			16、Retina屏的1px边框
+			Element{
+			  border-width:thin;
+			}
+			17、webkit mask 兼容处理
+			某些低端手机不支持css3 mask，可以选择性的降级处理。
+			比如可以使用js判断来引用不同class：
+			if('WebkitMask'indocument.documentElement.style){
+			  alert('支持mask');
+			}else{
+			  alert('不支持mask');
+			}
+			18、旋转屏幕时，字体大小调整的问题
+			html, body, form, fieldset, p, div, h1, h2, h3, h4, h5, h6{
+			  -webkit-text-size-adjust:100%;
+			}
+			19、transition闪屏
+			/设置内嵌的元素在3D 空间如何呈现：保留3D /
+			-webkit-transform-style: preserve-3d;
+			/ 设置进行转换的元素的背面在面对用户时是否可见：隐藏 / 
+			-webkit-backface-visibility:hidden;
+			20、圆角bug
+			某些Android手机圆角失效
+			background-clip: padding-box;
+			21、顶部状态栏背景色
+			<meta name="apple-mobile-web-app-status-bar-style"content="black"/>
+			说明：
+			除非你先使用apple-mobile-web-app-capable指定全屏模式，否则这个meta标签不会起任何作用。
+			如果content设置为default，则状态栏正常显示。如果设置为blank，则状态栏会有一个黑色的背景。如果设置为blank-translucent，则状态栏显示为黑色半透明。如果设置为default或blank，则页面显示在状态栏的下方，即状态栏占据上方部分，页面占据下方部分，二者没有遮挡对方或被遮挡。如果设置为blank-translucent，则页面会充满屏幕，其中页面顶部会被状态栏遮盖住（会覆盖页面20px高度，而iphone4和itouch4的Retina屏幕为40px）。默认值是default。
+			22、设置缓存
+			<meta http-equiv="Cache-Control"content="no-cache"/>
+			手机页面通常在第一次加载后会进行缓存，然后每次刷新会使用缓存而不是去重新向服务器发送请求。如果不希望使用缓存可以设置no-cache。
+			23、桌面图标
+			<link rel="apple-touch-icon"href="touch-icon-iphone.png"/>
+			<link rel="apple-touch-icon"sizes="76x76"href="touch-icon-ipad.png"/>
+			<link rel="apple-touch-icon"sizes="120x120"href="touch-icon-iphone-retina.png"/>
+			<link rel="apple-touch-icon"sizes="152x152"href="touch-icon-ipad-retina.png"/>
+			iOS下针对不同设备定义不同的桌面图标。如果不定义则以当前屏幕截图作为图标。
+			上面的写法可能大家会觉得会有默认光泽，下面这种设置方法可以去掉光泽效果，还原设计图的效果！
+			   <link rel="apple-touch-icon-precomposed"href="touch-icon-iphone.png"/>
+			图片尺寸可以设定为5757（px）或者Retina可以定为114114（px），ipad尺寸为72*72（px)
+			24、启动画面
+			<link rel="apple-touch-startup-image"href="start.png"/>
+			iOS下页面启动加载时显示的画面图片，避免加载时的白屏。
+			可以通过madia来指定不同的大小：
+			iPhone
+			<link href="apple-touch-startup-image-320x460.png"media="(device-width: 320px)" rel="apple-touch-startup-image"/>
+			iPhone Retina
+			<link href="apple-touch-startup-image-640x920.png"media="(device-width: 320px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image"/>
+			iPhone 5
+			<link rel="apple-touch-startup-image"media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" href="apple-touch-startup-image-640x1096.png">
+			iPad portrait
+			<link href="apple-touch-startup-image-768x1004.png"media="(device-width: 768px) and (orientation: portrait)" rel="apple-touch-startup-image"/>
+			iPad landscape
+			<link href="apple-touch-startup-image-748x1024.png"media="(device-width: 768px) and (orientation: landscape)" rel="apple-touch-startup-image"/>
+			iPad Retina portrait
+			<link href="apple-touch-startup-image-1536x2008.png"media="(device-width: 1536px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image"/>
+			iPad Retina landscape
+			<link href="apple-touch-startup-image-1496x2048.png"media="(device-width: 1536px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2)"rel="apple-touch-startup-image"/>
+			25、浏览器私有及其它meta
+			以下属性在项目中没有应用过，可以写一个demo测试以下！
+			QQ浏览器私有
+			全屏模式
+			<meta name="x5-fullscreen"content="true">
+			强制竖屏
+			<meta name="x5-orientation"content="portrait">
+			强制横屏
+			<meta name="x5-orientation"content="landscape">
+			应用模式
+			<meta name="x5-page-mode"content="app">
+			UC浏览器私有
+			全屏模式
+			<meta name="full-screen"content="yes">
+			强制竖屏
+			<meta name="screen-orientation"content="portrait">
+			强制横屏
+			<meta name="screen-orientation"content="landscape">
+			应用模式
+			<meta name="browsermode"content="application">
+			其它
+			针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓
+			<meta name="HandheldFriendly"content="true">
+			微软的老式浏览器
+			<meta name="MobileOptimized"content="320">
+			windows phone 点击无高光
+			<meta name="msapplication-tap-highlight"content="no">
+			26、 IOS中input键盘事件keyup、keydown、keypress支持不是很好
+			问题是这样的，用input search做模糊搜索的时候，在键盘里面输入关键词，会通过ajax后台查询，然后返回数据，然后再对返回的数据进行关键词标红。用input监听键盘keyup事件，在安卓手机浏览器中是可以的，但是在ios手机浏览器中变红很慢，用输入法输入之后，并未立刻相应keyup事件，只有在通过删除之后才能相应！
+			解决办法：
+			可以用html5的oninput事件去代替keyup
+			<input type="text"id="testInput">
+			<script type="text/javascript">
+			  document.getElementById('testInput').addEventListener('input',function(e){
+			    varvalue = e.target.value;
+			  });
+			</script>
+			然后就达到类似keyup的效果！
+			27、h5网站input 设置为type=number的问题
+			h5网页input 的type设置为number一般会产生三个问题，一个问题是maxlength属性不好用了。另外一个是form提交的时候，默认给取整了。三是部分安卓手机出现样式问题。
+			问题一解决，我目前用的是js。如下
+			<input type="number"oninput="checkTextLength(this ,10)">
+			 
+			functioncheckTextLength(obj, length) {  
+			      if(obj.value.length > length)  {     
+			        obj.value = obj.value.substr(0, length);  
+			      } 
+			}
+			问题二，是因为form提交默认做了表单验证，step默认是1,要设置step属性，假如保留2位小数，写法如下：
+			<input type="number"step="0.01"/>
+			关于step，我在这里做简单的介绍，input 中type=number，一般会自动生成一个上下箭头，点击上箭头默认增加一个step，点击下箭头默认会减少一个step。number中默认step是1。也就是step=0.01,可以允许输入2位小数，并且点击上下箭头分别增加0.01和减少0.01。
+			假如step和min一起使用，那么数值必须在min和max之间。
+			看下面的例子：
+			<input type="number"step="3.1"min="1"/>
+			输入框可以输入哪些数字？
+			首先，最小值是1，那么可以输入1.0，第二个是可以输入（1+3.1）那就是4.1,以此类推，每次点击上下箭头都会增加或者减少3.1，输入其他数字无效。这就是step的简单介绍。
+			问题三，去除input默认样式
+			input[type=number] {
+			  -moz-appearance:textfield;
+			}
+			input[type=number]::-webkit-inner-spin-button,
+			input[type=number]::-webkit-outer-spin-button {
+			  -webkit-appearance:none;
+			  margin:0;
+			}
+			28、ios 设置input 按钮样式会被默认样式覆盖
+			解决方式如下：
+			input,
+			textarea {
+			  border: 0; 
+			  -webkit-appearance: none; 
+			}
+			设置默认样式为none
+			29、IOS键盘字母输入，默认首字母大写
+			解决方案，设置如下属性
+			<input type="text"autocapitalize="off"/>
+			30、select 下拉选择设置右对齐
+			设置如下：
+			select option {
+			direction: rtl;
+			}
+			31、通过transform进行skew变形，rotate旋转会造成出现锯齿现象
+			可以设置如下：
+			-webkit-transform: rotate(-4deg) skew(10deg) translateZ(0);
+			 transform: rotate(-4deg) skew(10deg) translateZ(0);
+			 outline: 1px solid rgba(255,255,255,0)
+			32、移动端点击300ms延迟
+			300ms尚可接受，不过因为300ms产生的问题，我们必须要解决。300ms导致用户体验并不是很好，解决这个问题，我们一般在移动端用tap事件来取代click事件。
+			推荐两个js，一个是fastclick，一个是tap.js
+			关于300ms延迟，具体请看：http://thx.github.io/mobile/300ms-click-delay/
+			33、移动端点透问题
+			案例如下：
+			<div id="haorooms">点头事件测试</div>
+			 
+			<a href="www.baidu.net">www.baidu.com</a>
+			div是绝对定位的蒙层,并且z-index高于a。而a标签是页面中的一个链接，我们给div绑定tap事件：
+			$('#haorooms').on('tap',function(){
+			$('#haorooms').hide();
+			});
+			我们点击蒙层时 div正常消失，但是当我们在a标签上点击蒙层时，发现a链接被触发，这就是所谓的点透事件。
+			原因：
+			touchstart 早于 touchend 早于click。 亦即click的触发是有延迟的，这个时间大概在300ms左右，也就是说我们tap触发之后蒙层隐藏， 此时 click还没有触发，300ms之后由于蒙层隐藏，我们的click触发到了下面的a链接上。
+			解决：
+			（1）尽量都使用touch事件来替换click事件。例如用touchend事件(推荐)。
+			（2）用fastclick，https://github.com/ftlabs/fastclick
+			（3）用preventDefault阻止a标签的click
+			（4）延迟一定的时间(300ms+)来处理事件 （不推荐）
+			（5）以上一般都能解决，实在不行就换成click事件。
+			下面介绍一下touchend事件，如下：
+			$("#haorooms").on("touchend",function(event) {
+			   event.preventDefault();
+			 });
+			34、消除 IE10 里面的那个叉号
+			input:-ms-clear{display:none;}
+			35、关于 iOS 与 OS X 端字体的优化(横竖屏会出现字体加粗不一致等)
+			iOS 浏览器横屏时会重置字体大小，设置 text-size-adjust 为 none 可以解决 iOS 上的问题，但桌面版 Safari 的字体缩放功能会失效，因此最佳方案是将 text-size-adjust 为 100% 。
+			-webkit-text-size-adjust:100%;
+			-ms-text-size-adjust:100%;
+			text-size-adjust:100%;
+
+			36、关于 iOS 系统中，中文输入法输入英文时，字母之间可能会出现一个六分之一空格
+			可以通过正则去掉
+			this.value = this.value.replace(/\u2006/g,'');
+			37、移动端 HTML5 audio autoplay 失效问题
+			这个不是 BUG，由于自动播放网页中的音频或视频，会给用户带来一些困扰或者不必要的流量消耗，所以苹果系统和安卓系统通常都会禁止自动播放和使用 JS 的触发播放，必须由用户来触发才可以播放。
+			解决方法思路：先通过用户 touchstart 触碰，触发播放并暂停（音频开始加载，后面用 JS 再操作就没问题了）。
+			解决代码：
+			document.addEventListener('touchstart',function() {
+			  document.getElementsByTagName('audio')[0].play();
+			  document.getElementsByTagName('audio')[0].pause();
+			}); 
+
+
+
+<!-- 移动开发问题和优化 -->
+	消除transition闪屏
+	PS：这个问题，我近段时间开发，貌似不加上这个代码也没什么影响，但是以前就是要求加，就加上了，现在没加上，也没反馈有什么问题！
+	
+	.no-flash { 
+	    -webkit-transform-style: preserve-3d; 
+	    -webkit-backface-visibility: hidden; 
+	    -webkit-perspective: 1000; 
+	}  
+
+<!-- 解决移动端卡顿 -->
+ios：滑动卡顿 -webkit-overflow-scrolling: touch;
+如果需要定位底部导航 fixed 在上面部分加上这段代码 
+overflow:scroll;height:100%;-webkit-overflow-scrolling: touch;
+定位会影响滑动。
+
+<!-- 解决iphone横屏时会放大文字 -->
+-webkit-text-size-adjust:100%;
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+
+
+<!-- 图片预加载-->
+下面栗子，将这#preloader这个元素加入到到html中，就可以实现通过CSS的background属性将图片预加载到屏幕外的背景上。只要这些图片的路径保持不变，当它们在web页面的其他地方被调用时，浏览器就会在渲染过程中使用预加载（缓存）的图片。简单、高效，不需要任何JavaScript。
+
+#preloader {
+    /*需要预加载的图片*/
+    background: url(image1.jpg) no-repeat,url(image2.jpg) no-repeat,url(image3.jpg) no-repeat;
+    width: 0px;
+    height: 0px;
+    display: inline;
+}
+但是这样会有一个问题，因为#preloader预加载的图片，会和页面上的其他内容一起加载，增加了页面的整体加载时间。所以需要用js控制
+
+function preloader(urlArr,obj) {
+    var bgText='';
+    for(var i=0,len=urlArr.length;i<len;i++){
+        bgText+='url('+urlArr[i]+') no-repeat,';
+    }
+    obj.style.background=bgText.substr(0,bgText.length-1);
+}
+window.onload = function() {
+   preloader(['image1.jpg','image2.jpg','image3.jpg'],document.getElementById('preloader'));
+}
+原理也很简单，就是先让首屏的图片加载完，然后再加载其它的图片。通过给#preloader设置背景图片，加载所需要的图片，然后页面上需要加载这些图片的时候，就直接从缓存里面拿图片，不需要通过http请求获取图片，这样加载就很快。
+
+<!-- css引入-->
+13.避免使用@import
+css样式文件有两种引入方式，一种是link元素，另一种是@import。在这里，我建议就是避免使用@import。因为@import会影响浏览器的并行下载，使得页面在加载时增加额外的延迟，增添了额外的往返耗时。而且多个@import可能会导致下载顺序紊乱。比如一个css文件index.css包含了以下内容：@import url("reset.css")。那么浏览器就必须先把index.css下载、解析和执行后，才下载、解析和执行第二个文件reset.css。简单的解决方法是使用<link>替代@import。
+
+
+<!-- 15.小图标的处理方案-->
+一个网站，肯定会有很多个小图标，对于这些小图标，目前的解决方案有两个，cssSprite(雪碧图)，字体图标，把图片转成base64。下面对比一下这两种方式！
+cssSprite：把所有icon图片合成一张png图片，使用的是在，对节点设置宽高，加上bacgroud-position。以背景图方式显展示需要的icon，如果一个网站有20图标，那么就要请求20次，使用cssSprite，只需要请求一次，大大的减少了http请求。缺点就是管理不灵活，如果需要新增一个图标，都需要改合并图片的源文件，图标定位也要规范，不然容易干扰图片之间的定位！
+字体图标：简单粗暴的理解就是把所有的图标当成一个字体处理！这样不用去请求图片。一般是使用class来定义图标，要替换图标时，只需更换样式名，管理方便，语意明确，灵活放大缩小，并且不会造成失真。但是只支持单色的图片。
+base64：另一种方案就是把小的icon图片转成base64编码，这样可以不用去请求图片，把base64编码直接整合到js或者css里面，可以防止因为一些相对路径，或者图片被不小删除了等问题导致图片404错误。但是找个方式会生成一大串的base64编码。一般来说，8K以下的图片才转换成base64编码。如果把一张50K的图片转成base64编码，那么会生成超过65000个字符的base64编码，字符的大小就已经是将近70K了！建议就是：8K以下的图片才转换成base64编码。
+
+<!--17.把常用样式抽封装成公用样式-->
+把长段相同样式提取出来作为公用样式使用，比如常用的清除浮动，单行超出显示省略号，多行超出省略号等等。
+
+/*超出省略号*/
+/*<p class='text-ellipsis'></p>*/
+.text-ellipsis{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+/*清除浮动*/
+/*<div class='clearfix'></div>*/
+.clearfix:after {
+    display: block;
+    content: '';
+    clear: both;
+    height:0;
+}
+
+
+
+//总结干货30条
+
+0.谈谈对前端安全的理解，有什么，怎么防范
+前端安全问题主要有XSS、CSRF攻击
+XSS：跨站脚本攻击
+它允许用户将恶意代码植入到提供给其他用户使用的页面中，可以简单的理解为一种javascript代码注入。
+XSS的防御措施：
+过滤转义输入输出
+避免使用eval、new Function等执行字符串的方法，除非确定字符串和用户输入无关
+使用cookie的httpOnly属性，加上了这个属性的cookie字段，js是无法进行读写的
+使用innerHTML、document.write的时候，如果数据是用户输入的，那么需要对象关键字符进行过滤与转义
+CSRF：跨站请求伪造
+其实就是网站中的一些提交行为，被黑客利用，在你访问黑客的网站的时候进行操作，会被操作到其他网站上
+CSRF防御措施：
+检测http referer是否是同域名
+避免登录的session长时间存储在客户端中
+关键请求使用验证码或者token机制
+其他的一些攻击方法还有HTTP劫持、界面操作劫持
+
+1.使用箭头函数需要注意的地方
+当要求动态上下文的时候，你就不能使用箭头函数，比如：定义方法，用构造器创建对象，处理时间时用 this 获取目标。
+
+2.webpack.load的原理
+loaders是你用在app源码上的转换元件。他们是用node.js运行的，把源文件作为参数，返回新的资源的函数。
+
+3.ES6 let、const
+let
+let是更完美的var
+let声明的变量拥有块级作用域,let声明仍然保留了提升的特性，但不会盲目提升。
+let声明的全局变量不是全局对象的属性。不可以通过window.变量名的方式访问
+形如for (let x…)的循环在每次迭代时都为x创建新的绑定
+let声明的变量直到控制流到达该变量被定义的代码行时才会被装载，所以在到达之前使用该变量会触发错误。
+const
+定义常量值，不可以重新赋值，但是如果值是一个对象，可以改变对象里的属性值
+const OBJ = {"a":1, "b":2};
+OBJ.a = 3;
+OBJ = {};// 重新赋值，报错！
+console.log(OBJ.a); // 3
+
+4.CSS3 box-sizing的作用
+设置CSS盒模型为标准模型或IE模型。标准模型的宽度只包括content，二IE模型包括border和padding
+box-sizing属性可以为三个值之一：
+content-box，默认值，border和padding不计算入width之内
+padding-box，padding计算入width内
+border-box，border和padding计算入width之内
+
+5.说说HTML5中有趣的标签（新标签及语义化）
+如果代码写的语义化，有利于SEO。搜索引擎就会很容易的读懂该网页要表达的意思。例如文本模块要有大标题，合理利用h1-h6，列表形式的代码使用ul或ol，重要的文字使用strong等等。总之就是要充分利用各种HTML标签完成他们本职的工作
+
+6.git命令，如何批量删除分支
+git branch |grep 'branchName' |xargs git branch -D,从分支列表中匹配到指定分支，然后一个一个(分成小块)传递给删除分支的命令，最后进行删除。(参考这里)
+
+7.创建对象的三种方法
+第一种方式，字面量
+var o1 = {name: "o1"}
+var o2 = new Object({name: "o2"})
+第二种方式，通过构造函数
+var M = function(name){ this.name = name }
+var o3 = new M("o3")
+第三种方式，Object.create
+var  p = {name: "p"}
+var o4 = Object.create(p)
+新创建的对o4的原型就是p，同时o4也拥有了属性name
+
+8.JS实现继承的几种方式
+借用构造函数实现继承
+function Parent1(){
+    this.name = "parent1"
+}
+function Child1(){
+    Parent1.call(this);
+    this.type = "child1";
+}
+缺点：Child1无法继承Parent1的原型对象，并没有真正的实现继承（部分继承）
+借用原型链实现继承
+function Parent2(){
+    this.name = "parent2";
+    this.play = [1,2,3];
+}
+function Child2(){
+    this.type = "child2";
+}
+Child2.prototype = new Parent2();
+缺点：原型对象的属性是共享的
+组合式继承
+function Parent3(){
+    this.name = "parent3";
+    this.play = [1,2,3];
+}
+function Child3(){
+    Parent3.call(this);
+    this.type = "child3";
+}
+Child3.prototype = Object.create(Parent3.prototype);
+Child3.prototype.constructor = Child3;
+
+9.当new Foo()时发生了什么
+1.创建了一个新对象
+2.将this指向这个新对象
+3.执行构造函数里面的代码
+4.返回新对象（this）
+参考《JS高程》6.6.2
+
+10.你做过哪些性能优化
+雪碧图，移动端响应式图片，静态资源CDN，减少Dom操作（事件代理、fragment），压缩JS和CSS、HTML等，DNS预解析
+
+11.浏览器渲染原理
+首先来看一张图：
+
+√ 【我遇到的面试题2017】
+我遇到的前端面试题2017_
+HTML被解析成DOM Tree，CSS被解析成CSS Rule Tree
+把DOM Tree和CSS Rule Tree经过整合生成Render Tree（布局阶段）
+元素按照算出来的规则，把元素放到它该出现的位置，通过显卡画到屏幕上
+更多详情看这里
+12.前端路由的原理
+什么是路由？简单的说，路由是根据不同的 url 地址展示不同的内容或页面
+使用场景？前端路由更多用在单页应用上, 也就是SPA, 因为单页应用, 基本上都是前后端分离的, 后端自然也就不会给前端提供路由。
+前端的路由和后端的路由在实现技术上不一样，但是原理都是一样的。在 HTML5 的 history API 出现之前，前端的路由都是通过 hash 来实现的，hash 能兼容低版本的浏览器。
+两种实现前端路由的方式
+HTML5 History两个新增的API：history.pushState 和 history.replaceState，两个 API 都会操作浏览器的历史记录，而不会引起页面的刷新。
+Hash就是url 中看到 # ,我们需要一个根据监听哈希变化触发的事件( hashchange) 事件。我们用 window.location 处理哈希的改变时不会重新渲染页面，而是当作新页面加到历史记录中，这样我们跳转页面就可以在 hashchange 事件中注册 ajax 从而改变页面内容。
+优点
+从性能和用户体验的层面来比较的话，后端路由每次访问一个新页面的时候都要向服务器发送请求，然后服务器再响应请求，这个过程肯定会有延迟。而前端路由在访问一个新页面的时候仅仅是变换了一下路径而已，没有了网络延迟，对于用户体验来说会有相当大的提升。
+更多内容请看这里
+缺点
+使用浏览器的前进，后退键的时候会重新发送请求，没有合理地利用缓存。
+
+13.Restful API是什么
+Restful的意思就是表现层状态转化。
+"表现层"其实指的是"资源"（Resources）的"表现层"，把"资源"具体呈现出来的形式，叫做它的"表现层"（Representation）。
+所谓"资源"，就是网络上的一个实体，或者说是网络上的一个具体信息。它可以是一段文本、一张图片、一首歌曲、一种服务，总之就是一个具体的实在，每一个URI代表一种资源。
+如果客户端想要操作服务器，必须通过某种手段，让服务器端发生"状态转化"（State Transfer）。而这种转化是建立在表现层之上的，所以就是"表现层状态转化"。
+Restful就是客户端和服务器之间，传递这种资源的某种表现层
+客户端通过四个HTTP动词，对服务器端资源进行操作，实现"表现层状态转化"
+Restful API就是符合Restful架构的API设计。
+Restful API一些具体实践：
+应该尽量将API部署在专用域名之下。如果确定API很简单，不会有进一步扩展，可以考虑放在主域名下。
+应该将API的版本号放入URL。
+对于资源的具体操作类型，由HTTP动词表示
+如果记录数量很多，服务器不可能都将它们返回给用户。API应该提供参数，过滤返回结果
+如果状态码是4xx，就应该向用户返回出错信息。一般来说，返回的信息中将error作为键名
+.....
+14.script标签的defer、async的区别
+defer是在HTML解析完之后才会执行，如果是多个，按照加载的顺序依次执行
+async是在加载完成后立即执行，如果是多个，执行顺序和加载顺序无关
+
+15.同源与跨域
+什么是同源策略？
+限制从一个源加载的文档或脚本如何与来自另一个源的资源进行交互。
+一个源指的是主机名、协议和端口号的组合，必须相同
+跨域通信的几种方式
+JSONP
+Hash
+postMessage
+WebSocket
+CORS
+JSONP原理
+基本原理：利用script标签的异步加载特性实现
+给服务端传一个回调函数，服务器返回一个传递过去的回调函数名称的JS代码
+更多请查看：《前后端通信类知识》
+
+16.原型与闭包相关问题
+原型是什么
+原型就是一个普通的对象，每个对象都有一个原型（Object除外），原型能存储我们的方法，构造函数创建出来的实例对象能够引用原型中的方法。
+查看原型
+以前一般使用对象的__proto__属性，ES6推出后，推荐用Object.getPrototypeOf()方法来获取对象的原型
+闭包是什么？
+专业说法：当一个内部函数被其外部函数之外的变量引用时，就形成了一个闭包。
+还可以这么理解：
+闭包就是一个具有封闭功能与包裹功能的结构，是为了实现具有私有访问空间的函数的，函数可以构成闭包，因为函数内部定义的数据函数外部无法访问，即函数具有封闭性；函数可以封装代码即具有包裹性，所以函数可以构成闭包。
+创建闭包的最常见的方式就是在一个函数内创建另一个函数，通过另一个函数访问这个函数的局部变量
+闭包的特性
+闭包有三个特性：
+函数嵌套函数
+函数内部可以引用外部的参数和变量
+参数和变量不会被垃圾回收机制回收
+闭包有什么用，使用场景
+当我们需要在模块中定义一些变量，并希望这些变量一直保存在内存中但又不会“污染”全局的变量时，就可以用闭包来定义这个模块。
+闭包的缺点
+闭包的缺点就是常驻内存，会增大内存使用量，使用不当很容易造成内存泄露。
+函数套函数就是闭包吗？不是！，当一个内部函数被其外部函数之外的变量引用时，才会形成了一个闭包。
+更多内容请看这里
+
+17.如何进行错误监控
+前端错误的分类
+即时运行错误（代码错误）
+资源加载错误
+错误的捕获方式
+即时运行错误的捕获方式：
+try...catch
+window.onerror
+资源加载错误：
+object.onerror（如img,script）
+performance.getEntries()
+Error事件捕获
+延伸：跨域的js运行错误可以捕获吗，错误提示什么，应该怎么处理？
+可以。
+Script error
+1.在script标签增加crossorigin属性
+2.设置js资源响应头Access-Control-Allow-Orgin:*
+上报错误的基本原理
+采用Ajax通信方式上报
+利用Image对象上报
+18.DOM事件类
+DOM事件的级别
+DOM0，element.onclick = function(){}
+DOM2，element.addEventListener('click', function(){}, false);
+DOM事件模型是什么：指的是冒泡和捕获
+DOM事件流是什么：捕获阶段 -> 目标阶段 -> 冒泡阶段
+描述DOM事件捕获的具体流程
+window --> document --> documentElement(html标签) --> body --> .... --> 目标对象
+Event对象常见应用
+event.preventDefault()，阻止默认行为
+event.stopPropagation()，阻止事件冒泡
+event.stopImmediatePropagation()，阻止剩余的事件处理函数执行并且防止事件冒泡到DOM树上，这个方法不接受任何参数。
+event.currentTarget，返回绑定事件的元素
+event.target，返回触发事件的元素
+如何自定义事件
+Event，不能传递参数
+var eve = new Event('自定义事件名');
+ev.addEventListener('自定义事件名', function(){
+    console.log('自定义事件')
+});
+ev.dispatchEvent(eve);
+CustomEvent，还可以指定参数
+
+19.本地起了一个http server，为什么只能在同一个WIFI(局域网)上访问？
+你没有公网IP当然就不能被外网访问了。常见的WIFI情况下，一般的ip会是~192.168.0.x·这样的，只是对局域网(同WIFI下)可见，但是外网是访问不了的。（segmentfault上的答案）
+
+20.回流和重绘
+参考《如何写出高性能DOM？》
+
+21.数组去重的方法
+参考：《JavaScript数组去重》
+
+22.深拷贝与浅拷贝
+是什么
+浅拷贝只复制指向某个对象的指针，而不复制对象本身，新旧对象还是共享同一块内存。但深拷贝会另外创造一个一模一样的对象，新对象跟原对象不共享内存，修改新对象不会改到原对象。
+实现浅拷贝
+var obj1 = { a: 10, b: 20, c: 30 };
+var obj2 = obj1;
+obj2.b = 100;
+console.log(obj1);
+// { a: 10, b: 100, c: 30 } <-- b 被改到了
+console.log(obj2);
+// { a: 10, b: 100, c: 30 }
+实现深拷贝
+var obj1 = { a: 10, b: 20, c: 30 };
+var obj2 = { a: obj1.a, b: obj1.b, c: obj1.c };
+obj2.b = 100;
+console.log(obj1);
+// { a: 10, b: 20, c: 30 } <-- b 沒被改到
+console.log(obj2);
+// { a: 10, b: 100, c: 30 }
+深拷贝实现方式
+手动复制方式，如上面的代码，缺点就是
+Object.assign，ES6 的新函数，可以帮助我们达成跟上面一样的功能。
+var obj1 = { a: 10, b: 20, c: 30 };
+var obj2 = Object.assign({}, obj1);
+obj2.b = 100;
+console.log(obj1);
+// { a: 10, b: 20, c: 30 } <-- 沒被改到
+console.log(obj2);
+// { a: 10, b: 100, c: 30 }
+转成 JSON 再转回来
+用JSON.stringify把对象转成字符串，再用JSON.parse把字符串转成新的对象。
+缺点：只有可以转成JSON格式的对象才可以这样用，像function没办法转成JSON。
+jquery，有提供一个$.extend可以用来做 Deep Copy。
+lodash，也有提供_.cloneDeep用来做 Deep Copy。
+递归实现深拷贝
+function clone( o ) {
+var temp = {};
+for( var k in o ) {
+if( typeof o[ k ] == 'object' ){
+     temp[ k ] = clone( o[ k ] );
+} else {
+     temp[ k ] = o[ k ];
+}
+}
+return temp;
+}
+参考文章：关于 JS 中的浅拷贝和深拷贝,进击JavaScript之（四）玩转递归与数列
+
+23.如何快速合并雪碧图
+Gulp：gulp-css-spriter
+webpack：optimize-css-assets-webpack-plugin
+Go！Png
+在线工具
+24.代码优化基本方法
+减少HTTP请求
+HTML优化：
+使用语义化标签
+减少iframe：iframe是SEO的大忌，iframe有好处也有弊端
+避免重定向
+CSS优化：
+布局代码写前面
+删除空样式
+不滥用浮动，字体，需要加载的网络字体根据网站需求再添加
+选择器性能优化
+避免使用表达式，避免用id写样式
+js优化：
+压缩
+减少重复代码
+图片优化：
+使用WebP
+图片合并，CSS sprite技术
+减少DOM操作
+缓存已经访问过的元素
+"离线"更新节点, 再将它们添加到树中
+避免使用 JavaScript 输出页面布局--应该是 CSS 的事儿
+使用JSON格式来进行数据交换
+使用CDN加速
+使用HTTP缓存：添加 Expires 或 Cache-Control 信息头
+使用DNS预解析
+Chrome内置了DNS Prefetching技术, Firefox 3.5 也引入了这一特性，由于Chrome和Firefox 3.5本身对DNS预解析做了相应优化设置，所以设置DNS预解析的不良影响之一就是可能会降低Google Chrome浏览器及火狐Firefox 3.5浏览器的用户体验。
+预解析的实现：
+用meta信息来告知浏览器, 当前页面要做DNS预解析:<meta http-equiv="x-dns-prefetch-control" content="on" />
+在页面header中使用link标签来强制对DNS预解析: <link rel="dns-prefetch" href="http://bdimg.share.baidu.com" />
+25.HTTPS的握手过程
+浏览器将自己支持的一套加密规则发送给服务器。
+服务器从中选出一组加密算法与HASH算法，并将自己的身份信息以证书的形式发回给浏览器。证书里面包含了网站地址，加密公钥，以及证书的颁发机构等信息。
+浏览器获得网站证书之后浏览器要做以下工作：
+验证证书的合法
+如果证书受信任，或者是用户接受了不受信的证书，浏览器会生成一串随机数的密码，并用证书中提供的公钥加密。
+使用约定好的HASH算法计算握手消息，并使用生成的随机数对消息进行加密，最后将之前生成的所有信息发送给服务器
+网站接收浏览器发来的数据之后要做以下的操作：
+使用自己的私钥将信息解密取出密码，使用密码解密浏览器发来的握手消息，并验证HASH是否与浏览器发来的一致。
+使用密码加密一段握手消息，发送给浏览器。
+浏览器解密并计算握手消息的HASH，如果与服务端发来的HASH一致，此时握手过程结束，之后所有的通信数据将由之前浏览器生成的随机密码并利用对称加密算法进行加密。
+参考文章：《HTTPS 工作原理和 TCP 握手机制》
+26.BFC相关问题
+BFC(Block formatting context)直译为"块级格式化上下文"。它是一个独立的渲染区域，只有 Block-level box 参 与， 它规定了内部的 Block-level Box 如何布局，并且与这个区域外部毫不相干。
+BFC的渲染规则
+BFC这个元素的垂直方向的边距会发生重叠
+BFC的区域不会与浮动元素的box重叠（清除浮动原理）
+BFC在页面上是一个独立的容器，外面的元素不会影响它里面的元素，反过来它里面的元素也不会影响外面的元素
+计算BFC的高度的时候，浮动元素也会参与计算
+如何创建BFC？
+overflow属性不为visible
+float属性不为none
+position属性为absolute或fixed
+display属性为inline-block、table-cell、table-caption、flex、inline-flex
+BFC的使用场景
+他的很常用的一个应用场景就是解决边距重叠的问题.
+27.响应式图片
+1.JS或者服务端硬编码，resize事件，判断屏幕大小加载不同的图片
+2.img srcset 方法
+3.picture标签 -> source
+4.svg
+5.第三方库polyfill
+
+28.判断一个变量是否是数组
+var a = []; 
+// 1.基于instanceof 
+a instanceof Array; 
+// 2.基于constructor 
+a.constructor === Array; 
+// 3.基于Object.prototype.isPrototypeOf 
+Array.prototype.isPrototypeOf(a); 
+// 4.基于getPrototypeOf 
+Object.getPrototypeOf(a) === Array.prototype; 
+// 5.基于Object.prototype.toString 
+Object.prototype.toString.apply(a) === '[object Array]';
+// 6.Array.isArray
+Array.isArray([]); // true
+以上，除了Object.prototype.toString外，其它方法都不能正确判断变量的类型。
+
+29.UTF-8和Unicode的区别
+UTF-8就是在互联网上使用最广的一种unicode的实现方式。
+Unicode的出现是为了统一地区性文字编码方案，为解决unicode如何在网络上传输的问题，于是面向传输的众多 UTF（UCS Transfer Format）标准出现了，顾名思义，UTF-8就是每次8个位传输数据，而UTF-16就是每次16个位。
+ASCII --> 地区性编码（GBK） --> Unicode --> UTF-8
+
+
+
+//2017-10-13

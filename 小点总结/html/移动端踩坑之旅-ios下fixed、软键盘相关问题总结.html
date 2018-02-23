@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			.cont-warper {
+				position: absolute;
+				width: 100%;
+				left: 0;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				overflow-y: scroll;
+				-webkit-overflow-scrolling: touch;
+				/* 解决ios滑动不流畅问题 */
+			}
+			
+			.fix-bottom {
+				position: fixed;
+				bottom: 0;
+				width: 100%;
+			}
+		</style>
+	</head>
+	<body> 
+		<div class='warper'>
+			<div class='top'></div>
+			<div class='main'></div>
+		<div>
+		<div class="fix-bottom"></div>
+		<script>
+			//iOS下 
+			/*** 唤起键盘，滚动
+		     * 设置延时切换，input当失去焦点的时候清除。
+		     */
+		    scrollContent() {
+		        this.interval = setInterval(() => {
+		            this.scrollToEnd();
+		        }, 500)
+		    }
+		    scrollToEnd() {
+		        document.body.scrollTop = document.body.scrollHeight;
+		    }
+		    clearSrcoll() {
+		        clearInterval(this.interval);
+		    }
+		</script>
+	</body>
+</html>

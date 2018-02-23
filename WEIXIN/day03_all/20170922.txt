@@ -1,0 +1,95 @@
+1.回顾
+   微信小程序？
+   小程序构成? js  json  wxml wxss
+	                  weixin markup language
+										weixin stylesheet
+   app.js  app.json app.wxss
+	 pages/xxx/xxx.js  xxx.json xx.wxml xx.wxss
+ app.json? 全局配置 
+ app.js  ? 全局事件 4+1 
+     utils/xxx.js 
+ app.wxss? 全局样式
+   /pages/index.wxml   布局
+   /pages/index.wxss    样式表
+	 /pages/index.js      页面级别事件 9+1
+	 /pages/index.json    配置
+2.语法=====前端不同
+  2.1 添加事件
+	  onclick="abc()"  function abc(){}
+    bindtap="abc"    abc:function(){} 
+  2.2 获取标记?
+    var t=document.getElementById()
+		不能获取
+  2.3修改data数据 this.setData({ zz:45})
+    修改innerHTML
+     var t=document.getElementById()
+		 t.innerHTML="dsfg"
+    
+		<view>{{xx}}</view>
+		data:{xx:23}
+		this.setData({xx:89})
+  2.4修改样式
+	  var t=document.getElementById()
+		 t.style.color="#f00"
+    
+    style="display:{{xy}}"
+    xy:"none"
+    this.setData({xy:"block"})
+  2.5获取innerHTML
+	  var t=document.getElementById()
+		var s=t.innerHTML
+	 
+	  <view> {{xx}}</view>
+     var s=this.data.xx
+		 合成的值是合法就行
+  2.6修改类
+	  var t=document.getElementById()
+		t.className="abd"
+    <view class="{{gh}}"> {{xx}}</view>
+     this.setData({gh:"active"})
+  2.7传递参数
+onclick="abc(0)" function abc(num){ alert(num)}
+
+bindtap="abc" data-xx="0" data-kk="df"
+         abc:function(e){
+				  e.target.dataset.xx
+					e.target.dataset.kk
+				 }
+
+  2.8DOM操作
+	  var t=document.getElementById();
+       t.removeChild();
+			 t.appendChild();
+			 t.insertBefore();
+       document.createElement()
+   
+
+	 微信小程序无法获取标记
+	   <view wx:if="{{}}"></view>
+
+3.上线
+ ###申请一个小程序帐号https://mp.weixin.qq.com/
+   不能用公众号的邮箱
+ ###设置---开发设置设置 appID
+   wxa503da876bc540c8
+ ### 新建有appID项目
+ ### 上传 预览
+ ### 发布  在后台开发管理里面
+   提交审核----等--修改
+
+作业：
+  写一款上限小程序  小年糕+
+
+
+ 
+
+注意1:小程序里面没有document、window、location、screen、history
+
+宿主: js 基础语法:ecmascript  String Number Boolean Array Date RegExp
+      循环 变量 选择结构 函数
+	 浏览器:window document location
+	 Node: http file
+	 小程序: wx
+注意：this的含义
+  this 不同面
+	第一句话  var that=this;

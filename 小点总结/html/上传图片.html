@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<li>
+	    <span>上传截图</span>
+	    <div class="imgbox">
+	        <ul id="imageBoxz">
+	            <li class="pList"><input type="hidden" name="screenshot" id="screenshot" value="" /></li>
+	        </ul>
+	        <label class="btn-file zheng" data-role="add">
+	            <img class="upImg" src="images/upLoadImg.png" alt="">
+	            <input style="display:none;" class="fileImgBox" type="file" id="filesInputz" accept="image/*" >
+	        </label>
+	        <div class="clear"></div>
+	        <p class="appAndBox">该功能仅支持流量咪1.5.0以上版本,安卓操作系统4.4以上版本,请先升级！</p>
+	    </div>
+	    <div class="clear"></div>
+	</li>
+	<script type="text/javascript" src="crypto-min.js"></script>
+<script type="text/javascript" src="hmac-min.js"></script>
+<script type="text/javascript" src="sha1-min.js"></script>
+<script type="text/javascript" src="base64.js"></script>
+<script type="text/javascript" src="plupload.full.min.js"></script>
+	<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+	<script type="text/javascript">
+	/*	1、识别操作系统
+			因为项目需求，需要判断安卓还是苹果系统，如果苹果系统在应用市场的地方添加上App Store
+			判断的方法为浏览器标头，window.navigator.userAgent查找设备核心关键字。
+		2、获取页面链接地址中的参数,这个function getQueryString(name)是我用的获取链接地址参数方法正则表达式。
+	*/
+	//获取页面链接地址中的参数
+		function getQueryString(name) { 
+		    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+		    var r = window.location.search.substr(1).match(reg); 
+		    if (r != null) return unescape(r[2]); return null; 
+		}
+
+		//上传图片
+		$('#filesInputz').change(function(){
+		    var file = this.files[0]; //选择上传的文件
+		    var r = new FileReader();
+		    r.readAsDataURL(file); //Base64
+		    $(r).load(function(){
+		        $("#imageBoxz").html('<li class="pList">'+'<img src="'+ this.result +'" alt="评论截图" />'
+		        +'<input type="hidden" name="screenshot" id="screenshot" value="'+ this.result +'" />'+'</li>');
+		    });
+		    $(".zheng").css("opacity","0");
+		    $(".zheng").attr("title","点击更换");
+		    $(".zhengImg").css("display","none");
+		    $(".loading,#mask").show();
+		    ajax1();
+		});
+	</script>
+	<script type="text/javascript">
+		accessid= "LTAIn8FKIT0X2DbK";
+		accesskey= "Gr7o9BDt5G9DlbvmSuvX0P6tdPSZw6";
+		host = "https://bqrcommunity.oss-cn-beijing.aliyuncs.com";
+		g_dirname = '';
+		g_object_name = '';
+		g_object_name_type = '';
+		var policyText = {
+		    "expiration": "2020-01-01T12:00:00.000Z", //设置该Policy的失效时间，超过这个失效时间之后，就没有办法通过这个policy上传文件了
+		    "conditions": [
+		    ["content-length-range", 0, 1048576000] // 设置上传文件的大小限制
+		    ]
+		};
+		var policyBase64 = Base64.encode(JSON.stringify(policyText))
+		message = policyBase64
+		var bytes = Crypto.HMAC(Crypto.SHA1, message, accesskey, { asBytes: true }) ;
+		var signature = Crypto.util.bytesToBase64(bytes);
+
+		send_request = function(){//这是从后台获取认证策略等信息。
+		var htmlobj=$.ajax({url:root+"/service/policyInfoController/policy",async:false});
+		　　return htmlobj.responseText;
+		};
+
+		function get_signature(){//读取获得的参数
+		//可以判断当前expire是否超过了当前时间,如果超过了当前时间,就重新取一下.3s 做为缓冲
+		　　now = timestamp = Date.parse(new Date()) / 1000; 
+		　　if (expire < now + 3){
+		　　　　body = send_request();
+		　　　　console.log(body);
+		　　　　var obj = eval ("(" + body + ")");
+		　　　　host = obj['host']
+		　　　　policyBase64 = obj['policy']
+		　　　　accessid = obj['accessid']
+		　　　　signature = obj['signature']
+		　　　　expire = parseInt(obj['expire'])
+		　　　　callbackbody = obj['callback'] 
+		　　　　key = obj['dir']
+		　　　　return true;
+		　　}
+		　　return false;
+		};
+
+		//组装发送数据
+		var request = new FormData(); 
+		request.append("OSSAccessKeyId",accessid);//Bucket 拥有者的Access Key Id。
+		request.append("policy",policyBase64);//policy规定了请求的表单域的合法性
+		request.append("Signature",signature);//根据Access Key Secret和policy计算的签名信息，OSS验证该签名信息从而验证该Post请求的合法性
+		//---以上都是阿里的认证策略 
+		request.append("key",g_object_name);//文件名字，可设置路径
+		request.append("success_action_status",'200');// 让服务端返回200,不然，默认会返回204
+		request.append('file', file);//需要上传的文件 file  
+
+		request.append("callback",callbackbody);//回调，非必选，可以在policy中自定义
+
+		$.ajax({
+		        url : host,  //上传阿里地址
+		        data : request,
+		        processData: false,//默认true，设置为 false，不需要进行序列化处理
+		        cache: false,//设置为false将不会从浏览器缓存中加载请求信息
+		        async: false,//发送同步请求
+		        contentType: false,//避免服务器不能正常解析文件---------具体的可以查下这些参数的含义
+		        dataType: 'JSONP',//不涉及跨域  写json即可
+		   　　 type : 'post',
+		    　　success : function(callbackHost, request) { //callbackHost：success,request中就是 回调的一些信息，包括状态码什么的 
+		        var name=$this.attr("name");
+		        $this.closest("li").append("<span class='img-span'><img src="+host+"/"+get_uploaded_object_name(file.name)+">");//动态向页面添加上传图片
+		    },  
+		    error : function(returndata) {  
+		        alert("上传图片出错",false);  
+		    }  
+		});
+	</script>
+</body>
+</html>

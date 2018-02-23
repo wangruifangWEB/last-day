@@ -1,0 +1,6 @@
+<!--index.wxml-->
+<view class="container">
+                    #f00 
+ <view class="{{xx}}" style="">内容</view>
+ <view bindtap="abc">dfd</view>
+</view>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>滚动相关知识总结</title>
+	</head>
+	<body>
+		<script>
+			/*获取当前滚动高度
+			也就是页面顶部超出视口的高度。*/
+			function getScrollTop() {
+			  return document.body.scrollTop || document.documentElement.scrollTop;
+			}
+			//页面滚动的总高度
+			function getScrollHeight() {
+			  return document.body.scrollHeight || document.documentElement.scrollHeight;
+			}
+			//视口高度
+			function getClientHeight() {
+			  return Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+			}
+			if (getScrollTop() === 0) {
+			  // 滚动到了顶部
+			}
+			/*如何判断滚动到了最低部
+			当滚动高度scrollTop与视口高度clientHeight之和，大于等于总高度scrollHeight时，则表示滚动到了底部。*/
+			var curHeight = getScrollTop() + getClientHeight();
+			if (curHeight >= getScrollHeight()) {
+			  // 滚动到了底部
+			}
+			
+//			如何判断滚动方向
+			var preTop = 0;
+			var curTop = 0;
+			var timer = null;
+			
+			document.addEventListener('scroll', () => {
+			  clearTimeout(timer);
+			  curTop = getScrollTop();
+			
+			  if (curTop > preTop) {
+			    console.log('向下滚动');
+			  } 
+			
+			  if (curTop < preTop) {
+			    console.log('向上滚动');
+			  }
+			
+			  timer = setTimeout(() => { 
+			    preTop = curTop;
+			  }, 10);
+			  
+			}, !1);
+		</script>
+	</body>
+</html>

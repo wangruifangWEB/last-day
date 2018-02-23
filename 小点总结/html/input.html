@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<input type="text" name="">
+	<div id="div"></div>
+	<script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script type="text/javascript">
+		$('input').on({
+		    keyup : function(e){        
+		        var flag = e.target.isNeedPrevent;
+		        if(flag)  return;     
+		        response() ;
+		        e.target.keyEvent = false ;
+		        
+		    },
+		    keydown : function(e){
+		        e.target.keyEvent = true ; 
+		    },
+		    input : function(e){
+		        if(!e.target.keyEvent){
+		            response()
+		        }        
+		    },
+		    compositionstart : function(e){
+		        e.target.isNeedPrevent = true ;
+		    },
+		    compositionend : function(e){
+		        e.target.isNeedPrevent = false;
+		        
+		    }
+		})
+		function response(){
+		        $('div').append('<p>事 件触发</p>')
+		}
+	</script>
+</body>
+</html>

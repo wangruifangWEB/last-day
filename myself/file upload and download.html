@@ -1,0 +1,176 @@
+file upload and download
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<!-- accept="image/*" 可以用来限制只允许上传图像格式 -->
+<!-- 解决方法就是将 * 通配符改为指定的 MIME 类型。<input type="file" accept="image/gif,image/jpeg,image/jpg,image/png"> -->
+	<input type="file" id="files1" multiple>
+
+	<input type="file" id="files2" accept="image/jpeg,image/jpg,image/png">
+	<img src="img/loading.gif" id="preview">
+
+	<input type="file" id="file" multiple>
+<!--
+	FileList 对象和 file 对象
+	HTML 中的 input[type="file"] 标签有个 multiple 属性，允许用户选择多个文件，FileList对象则就是表示用户选择的文件列表。这个列表中的每一个文件，就是一个 file 对象。
+
+	file 对象的属性：
+	name : 文件名，不包含路径。
+	type : 文件类型。图片类型的文件都会以 image/ 开头，可以由此来限制只允许上传图片。
+	size : 文件大小。可以根据文件大小来进行其他操作。
+	lastModified : 文件最后修改的时间。
+  -->
+	<script>
+	    var elem = document.getElementById('files1');
+	    elem.onchange = function (event) {
+	        var files1 = event.target.files;
+	        for (var i = 0; i < files1.length; i++) {
+	            // 文件类型为 image 并且文件大小小于 200kb
+	            if(files1[i].type.indexOf('image/') !== -1 && files1[i].size < 204800){
+	                console.log(files1[i].name);
+	            }
+	        }
+	    }
+	</script>
+<!-- 
+	FileReader 对象
+
+	FileReader 对象主要用来把文件读入内存，并且读取文件中的数据。
+	通过构造函数创建一个 FileReader 对象
+
+	var reader = new FileReader();
+	该对象有以下方法：
+	abort：中断读取操作。
+	readAsArrayBuffer：读取文件内容到ArrayBuffer对象中。
+	readAsBinaryString：将文件读取为二进制数据。
+	readAsDataURL：将文件读取为data: URL格式的字符串。
+	readAsText：将文件读取为文本。
+
+	上传图片预览
+	在常见的应用就是在客户端上传图片之后通过 readAsDataURL() 来显示图片。 
+-->
+
+<script>
+    var elem = document.getElementById('files2'),
+        img = document.getElementById('preview');
+    elem.onchange = function () {
+        var files2 = elem.files2,
+            reader = new FileReader();
+        if(files2 && files2[0]){
+            reader.onload = function (ev) {
+                img.src = ev.target.result;
+            }
+            reader.readAsDataURL(files2[0]);
+        }
+    }
+</script>
+
+<!-- 
+	Blob的应用
+	1. 大文件分割 (slice() 方法)
+	slice() 方法接受三个参数，起始偏移量，结束偏移量，还有可选的 mime 类型。
+	如果 mime 类型，没有设置，那么新的 Blob 对象的 mime 类型和父级一样。
+	当要上传大文件的时候，此方法非常有用，可以将大文件分割分段，
+	然后各自上传，因为分割之后的 Blob 对象和原始的是独立存在的。
+	不过目前浏览器实现此方法还没有统一，
+	火狐使用的是 mozSlice() ，Chrome 使用的是 webkitSlice() ，
+	其他浏览器则正常的方式 slice();
+	可以写一个兼容各浏览器的方法：
+-->
+<!-- 
+	blob对象介绍
+	一个 Blob对象表示一个不可变的, 原始数据的类似文件对象。
+	Blob表示的数据不一定是一个JavaScript原生格式
+	 blob对象本质上是js中的一个对象，
+	里面可以储存大量的二进制编码格式的数据 
+-->
+<!-- 
+	创建blob对象
+	创建blob对象本质上和创建一个其他对象的方式是一样的，都是使用Blob() 的构造函数来进行创建。 构造函数接受两个参数：
+
+	第一个参数为一个数据序列，可以是任意格式的值。
+
+	第二个参数是一个包含两个属性的对象{ type: MIME的类型, endings: 决定第一个参数的数据格式，可以取值为 "transparent" 或者 "native"（transparent的话不变，是默认值，native 的话按操作系统转换） 。 }
+
+	Blob()构造函数允许使用其他对象创建一个Blob对象，比如用字符串构建一个blob
+	var debug = {hello: "world"};
+	var blob = new Blob([JSON.stringify(debug, null, 2)],
+	  {type : 'application/json'}); 
+-->
+<!-- 
+	属性:
+	Blob.isClosed (只读)
+	布尔值，指示 Blob.close() 是否在该对象上调用过。 关闭的 blob 对象不可读。
+	Blob.size (只读)
+	Blob 对象中所包含数据的大小（字节）。
+	Blob.type (只读)
+	一个字符串，表明该Blob对象所包含数据的MIME类型。如果类型未知，则该值为空字符串。
+ -->
+ <!-- 
+ 	方法:
+	Blob.close()
+	关闭 Blob 对象，以便能释放底层资源。
+	Blob.slice([start[, end[, contentType]]])
+
+	返回一个新的 Blob 对象，包含了源 Blob 对象中指定范围内的数据。其实就是对这个blob中的数据进行切割，我们在对文件进行分片上传的时候需要使用到这个方法。
+
+	看到上面这些方法和属性，使用过HTML5提供的File接口的应该都很熟悉，这些属性和方法在File接口中也都有。 其实File接口就是基于Blob，继承blob功能并将其扩展为支持用户系统上的文件，也就是说：
+
+	File接口中的Flie对象就是继承与Blob对象。
+  -->
+<script type="text/javascript">
+	var blob = new Blob(["Hello World!"],{type:"text/plain"});
+	// var builder = new BolbBuilder();
+	//   builder.append("Hello World!");
+	//   var blob = builder.getBlob("text/plain");
+	function sliceBlob(blob, start, end, type) {
+	  type = type || blob.type;
+	  if (blob.mozSlice) {
+	      return blob.mozSlice(start, end, type);
+	  } else if (blob.webkitSlice) {
+	      return blob.webkitSlice(start, end, type);
+	  } else {  
+	      throw new Error("This doesn't work!");
+	  }  
+	}  
+</script>
+
+<script type="text/javascript">
+	var BYTES_PER_CHUNK = 1024 * 1024; // 每个文件切片大小定为1MB .
+	var blob = document.getElementById("file").files[0];
+	var slices = Math.ceil(blob.size / BYTES_PER_CHUNK);
+	var blobs = [];
+	slices.forEach(function(item, index) {
+	    blobs.push(blob.slice(index,index + 1));
+	})
+	document.addEventListener('paste', function (e) {
+    console.info(e);
+    var cbd = e.clipboardData;
+        var fr = new FileReader();
+        var html = '';
+        for(var i = 0; i < cbd.items.length; i++) {
+            var item = cbd.items[i];
+            console.info(item);
+            if(item.kind == "file"){
+                var blob = item.getAsFile();
+                if (blob.size === 0) {
+                    return;
+                }
+                console.info(blob);
+                fr.readAsDataURL(blob);
+                fr.onload=function(e){
+                    var result=document.getElementById("result");
+                    //显示文件
+                    result.innerHTML='<img src="' + this.result +'" alt="" />';
+                }
+            }
+        }
+});
+</script>
+</body>
+</html>

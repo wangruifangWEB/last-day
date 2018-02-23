@@ -1,0 +1,39 @@
+<!--index.wxml-->
+<view class="container">
+  <view>dsf
+    {{xx}}
+  </view>
+  <view wx:if="{{true}}">fads</view>
+  <view wx:else>23s</view>
+
+<block wx:if="{{true}}">
+  <view >fads</view>
+</block>
+<block wx:else>
+  <view >23s</view>
+</block>
+
+  <view wx:if="{{a==0}}">fads</view>
+  <view wx:elif="{{a==1}}">23s</view>
+  <view wx:elif="{{a==2}}">23s</view>
+  <view wx:else>23s</view>
+
+<view wx:if="{{true}}">fads</view>
+
+<block wx:if="{{true}}">
+   <view>fads</view>
+</block>
+{{index}}
+ <view wx:for="{{kk}}"
+  wx:for-index="i"
+  wx:for-item="xiang"
+  >你{{item}}好{{i}}:{{index}}</view>
+
+<block wx:for="{{kk}}" wx:for-index="i"
+ wx:for-item="xiang">
+ <view>你{{item}}好{{i}}:{{index}}</view>
+
+</block>
+
+
+</view>

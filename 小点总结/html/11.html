@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		 <style>  
+            #mydiv {  
+                position:fixed;  
+                left:10px;  
+                top:10px;  
+                background-color:gray;  
+                width:100px;  
+                height:80px;  
+                z-index:10;  
+                display: block;  
+            }  
+        </style>  
+    </head>  
+  
+    <body>  
+        <div id="mydiv">out</div>  
+    </body>  
+  
+</html>  
+  <script src="js/query.min.js" type="text/javascript" charset="utf-8"></script>
+<script>   
+    $.fn.longPress = function(fn) {
+    var timeout = undefined;
+    var $this = this;
+    for(var i = 0;i<$this.length;i++){
+        $this[i].addEventListener('touchstart', function(event) {
+            timeout = setTimeout(fn, 800);  //长按时间超过800ms，则执行传入的方法
+            }, false);
+        $this[i].addEventListener('touchend', function(event) {
+            clearTimeout(timeout);  //长按时间少于800ms，不会执行传入的方法
+            }, false);
+    }
+}
+  $('#mydiv').longPress(function(){
+    alert(1)
+});
+</script>

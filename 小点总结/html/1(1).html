@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title></title>
+	</head>
+	<style>
+		li.on {
+			color: red;
+		}
+	</style>
+
+	<body>
+		<ul>
+			<li str='20171126'>20171126</li>
+			<li str='20171127'>20171127</li>
+			<li str='20171216'>20171228</li>
+			<li str='20171217'>20171217</li>
+			<li str='20171219'>20171218</li>
+			<li str='20171219'>20171218</li>
+			<li str='20171219'>20171218</li>
+			<li str='20171221'>20171222</li>
+			<li str='20171221'>20171222</li>
+			<li str='20171221'>20171222</li>
+			<li str='20171223'>20171223</li>
+		</ul>
+	</body>
+
+</html>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript">
+	//大体思路 
+	/*
+	 * 1.把li的str放到一个数组里面
+	 * 2.判断li里面有没有今天的日期 (如果有就给当前日期的li添加类名 如果没有就追加一个当前日期并且排序)
+	 * 3.判断追加当前日期的数组里面 上一个数组和下一个数组哪一个距离今天更近
+	 */
+	$(function() {
+		//show_Num 是定义变量当前日期
+		var show_Num = show1(); 
+		// 把li的srt存到li_Str的数组里面
+		var li_Str = [];
+		$("li").each(function(n, value) {
+			//获取到当前的str值存入数组中
+			li_Str.push($(this).attr('str'));
+		});
+		// 获取今天方法
+		function show1() {
+			var mydate = new Date();
+			var str = "" + mydate.getFullYear();
+			str += (mydate.getMonth() + 1);
+			str += mydate.getDate();
+			return str;
+		}
+		// 排序方法
+		function sortNumber(a, b) {
+			return a - b
+		}
+		if($.inArray(show_Num, li_Str) > 1) {
+			$('li').eq($.inArray(show_Num, li_Str)).addClass('on');
+		} else {
+			li_Str.push(show_Num); //追加数组
+			li_Str.sort(sortNumber); //排序
+			//判断上一个值和下一个值谁距离中间值最近
+			var s = Math.abs(li_Str[$.inArray(show_Num, li_Str) - 1] - show_Num), //转换整数
+				x = Math.abs(li_Str[$.inArray(show_Num, li_Str) + 1] - show_Num); //转换整数
+			var num = li_Str[$.inArray(show_Num, li_Str) - 1], //获取当前日期的上一个日期
+				nuu = li_Str[$.inArray(show_Num, li_Str) + 1]; //获取当前日期的下一个日期
+			if(s > x) {
+				$('li').eq($.inArray(nuu, li_Str)).addClass('on')
+			}
+			if(s < x) {
+				$('li').eq($.inArray(num, li_Str)).addClass('on')
+			}
+			if(s == x) {
+				$('li').eq($.inArray(num, li_Str)).addClass('on')
+			}
+		};
+	});
+</script>

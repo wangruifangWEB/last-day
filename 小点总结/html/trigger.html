@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title></title>
+		<script src="../js/jquery.min.js"></script>
+		<style>
+			.red{
+				color:red;
+			}
+		</style>
+	</head>
+	<body>
+		<ul>
+			<li></li>
+			<li><input type="text" placeholder="请选择..."/></li>
+			<li></li>
+		</ul>
+		
+		<input type="text">激活 input 域的 select 事件</input>
+		<button>点击获取状态值</button>
+		
+		<script>
+			$(document).ready(function(){
+				$("ul li:eq(1) input").addClass("red").trigger("focus");
+				$("input").select(function(){
+				   $("input").after("文本被选中！");
+				});
+				$("button").click(function(){
+				    $("input").trigger("select");
+				});
+			});
+		</script>
+	</body>
+</html>

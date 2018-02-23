@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>图片预加载demo</title>
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+</head>
+<style type="text/css">
+	#preloader{
+		/*需要预加载的图片*/
+		width:0;
+		height:0;
+		display: inline;
+		background:url(../images/image1.jpg) no-repeat,url(../images/image2.jpg) no-repeat,url(../image/images3.jpg)no-repeat;
+	}
+	
+</style>
+<body>
+	<div id="preloader"></div>
+	<ul>
+		<li><img src="../images/image1.jpg"></li>
+		<li><img src="../images/image2.jpg"></li>
+		<li><img src="../images/image3.jpg"></li>
+	</ul>
+	<script type="text/javascript">
+		function preloader(urlArr,obj){
+			var bgText='';
+			for(var i=0,len=urlArr.length;i<len;i++){
+				bgText+='url('+urlArr[i]+') no-repeat';
+			}
+			obj.style.background=bgText.substr(0,bgText.length-1);
+		}
+		window.onload =function () {
+			preloader(['../images/image1.jpg','../images/images2.jpg','../images/image3.jpg'],document.getElementById('preloader'));
+		}
+	</script>
+	<script type="text/javascript">
+		$(function(){
+			var totalImg = $('img').length;
+		        var currentImg = 0;
+		        $('img').on('load',function(){
+			   	 	currentImg++;
+				    console.log(currentImg);
+				    if(currentImg === totalImg){
+						alert('所有图片加载完毕');
+				    }
+		       })
+		})
+	</script>
+</body>
+</html>

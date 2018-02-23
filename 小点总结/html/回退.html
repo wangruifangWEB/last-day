@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			var flag=false;
+	       if(flag){
+	       	alert("符合条件");
+	       }else{
+	       		alert("请联系管理员");
+	       		//调用函数
+				/*closeWin();*/
+				history.go(-1);
+	       }
+       function closeWin(){
+       		var userAgent = navigator.userAgent;
+			if (userAgent.indexOf("Firefox") != -1 || userAgent.indexOf("Chrome") !=-1) {
+			   window.location.href="about:blank";
+			}else if(userAgent.indexOf('Android') > -1 || userAgent.indexOf('Linux') > -1){
+			   window.opener=null;
+			   window.open('about:blank','_self','').close();
+			}else {
+			   window.opener = null;
+			   window.open("about:blank", "_self");
+			   window.close();
+			}
+       }
+			function closeWin(){
+	       		var userAgent = navigator.userAgent;
+				if (userAgent.indexOf("Firefox") != -1 || userAgent.indexOf("Chrome") !=-1) {
+				   window.location.href="about:blank";
+				}else if(userAgent.indexOf('Android') > -1 || userAgent.indexOf('Linux') > -1){
+				   window.opener=null;window.open('about:blank','_self','').close();
+				}else {
+				   window.opener = null;
+				   window.open("about:blank", "_self");
+				   window.close();
+				}
+	       }
+		</script>
+	</body>
+</html>

@@ -1,0 +1,124 @@
+伪类
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    blockquote{
+        background-color: #ccc;
+        color: #fff;
+        height: 100px;
+        width: 400px;
+        text-align: center;
+        line-height: 100px;
+    }
+    blockquote:hover:before{
+        content: '啊啊啊啊哦';
+        color: red;
+    }
+
+    blockquote:hover:after{
+        content: '啊啊啊啊哦诶';
+        color: green;
+    }
+
+      /*清除浮动*/
+ 	.clearfix{zoom:1;} 
+    .clearfix:after {
+    	clear:both;
+    	content:'.';
+    	display:block;
+    	width: 0;
+    	height: 0;
+    	visibility:hidden;
+    }
+
+    /*添加相同的数字排序*/
+      *{
+        margin: 0;
+        padding: 0;
+    }
+
+    ul{
+        width:1000px;
+        margin: 0 auto;
+        counter-reset:li;
+    }
+
+    li{
+        list-style: none;
+    }
+
+    ul>li{
+        background-color: #ccc;
+        margin-top: 10px;
+    }
+
+     /*
+	    CSS Counters用到的属性
+		前面也提到过，使用CSS Counters给元素创建自动递增计算器不仅仅是依赖于某一个CSS属性来完成，他需要几个属性一起使用才会有效果。使用的到属性包括：
+
+		**counter-reset**：此值是必需的。必须用于选择器，主要用来标识该作用域，其值可以自定义。
+		**counter-increment**：用来标识计数器与实际相关联的范围。
+		**content**：用来生成内容，其为:before、:after或::before、::after的一个属性。在生成计数器内容，主要配合counter()一起使用。
+		**counter()**：该函数用来设置插入计数器的值。
+		**:before**、**:after**或**::before**、**::after**：配合content用来生成计数器内容。
+     */
+
+    ul>li:before{
+        content: counter(li);
+        counter-increment:li;
+        background-color: #333;
+        padding: 0 5px;
+        color: #fff;
+        margin-right: 10px;
+    }
+
+    /**/
+    dl {
+    	 	counter-reset: term; 
+    		dt{
+    			 counter-increment: term;
+    	 		counter-reset: definition;
+    		 &:before{
+    		  	content: counter(term,upper-roman) ":"; 
+    		 	margin-right:5px;
+    		 	}
+    		} 
+    	 	dd { 
+    	 		counter-increment: definition; 
+
+    	 	&:before{ 
+    	 		content:counter(term,upper-roman) "-" counter(definition,upper-roman) ":";
+    	 		margin-right:5px;
+    		}
+    	}
+    }
+
+    </style>
+</head>
+<body>
+    <blockquote>我是一个blockquote</blockquote>
+
+ <!-- 添加相同的数字排序 -->
+  <ul>
+        <li>List item one</li>
+        <li>The second item on the list</li>
+        <li>Number three is a bit longer, with some lorem ipsum for good measure. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</li>
+        <li>And here is number four.</li>
+        <li>The fifth item on the list</li>
+        <li>The sixth item on the list</li>
+    </ul>
+
+    <!-- 创建计数器 -->
+	<dl> 
+		<dt>term</dt> 
+		<dd>definition</dd>
+	 	<dt>term</dt>
+	 	<dd>definition</dd>
+	  	<dt>term</dt> 
+	   	<dd>definition</dd>
+	</dl>
+</body>
+</html>

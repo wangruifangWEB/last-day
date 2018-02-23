@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>级联选择</title>
+</head>
+<body>
+	
+	
+	<table>
+		<tr>
+            <td style="width: 130px">所在学院：</td>
+
+            <td style="width: 100px">
+
+                <select id="college" style="width: 200px" runat="server" onchange="changcollege(this.value)">
+                    <option value="0">--请选择所在学院学院--</option>
+                </select>
+            </td>
+        </tr>
+
+    	<tr>
+       		 <td style="width: 130px">所在专业：</td>
+
+        	<td style="width: 100px">
+
+           		<select id="specialty" style="width: 200px" runat="server" onchange="SaveSpecical(this.value)">
+               		 <option value="0">--请选择所在专业--</option>
+            	</select>
+       		 </td>
+    </tr>
+	</table>
+
+
+
+	<script type="text/javascript">
+		var http_request = false;
+		function send_request(method,url,content,responseType,callback)//定义发送请求的函数
+		{
+		    http_request=false;
+		    if(window.XMLHttpRequest)
+		    {
+		        http_request=new XMLHttpRequest();
+		        if(http_request.overrideMimeType)
+		        {
+		            http_request.overrideMimeType("text/xml");
+		        }
+		    }
+		    else
+		    {
+		        try
+		        {
+		            http_request=new ActiveXObject("Msxml2.XMLHTTP");
+		        }
+		        catch(e)
+		        {
+		            try
+		            {
+		                http_request=new ActiveXObject("Microsoft.XMLHTTP");
+		            }
+		            catch(e)
+		            {}
+		        }
+		    }
+		    if(!http_request)
+		    {
+		        window.alert("创建XMLHttpRequest对象失败");
+		        return false;
+		    }
+		    if(responseType.toLowerCase()=="text")
+		    {
+		        http_request.onreadystatechange=callback;
+		    }
+		    else
+		    {
+		        
+		        window.alert("ERR");
+		        return false;
+		    }
+		    if(method.toLowerCase()=="get")
+		    {
+		        http_request.open(method,url,true);
+		    }
+		    else if(method.toLowerCase()=="post")
+		    {
+		        http_request.open(method,url,true);
+		        http_request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+		    }
+		    else
+		    {
+		        window.alert("Err");
+		        return false;
+		    }
+		    http_request.send(content);
+		}
+
+		function changcollege(va)//当学院下拉列表发生改变时触发的脚本事件
+		{
+		    if(va!='0')
+		    {
+		        var speciality = document.getElementById("specialty");
+		        speciality.disabled=false;
+		        
+		        var url="Handler.ashx?type=college&id="+va;
+		        send_request("GET",url,null,"text",populateClass3);
+		    }
+		}
+		function populateClass3()//Ajax执行成功的回调函数
+		{
+		    var f=document.getElementById("specialty");
+		    if(http_request.readyState==4)
+		    {
+		            if(http_request.status==200)
+		            {
+		                var list=http_request.responseText;
+		                var classList=list.split("|");
+		                f.options.length=1;
+		                for(var i=0;i<classList.length;i++)
+		                        //将取得的结果添加到下级的列表框中
+		                {
+		                    var tmp=classList[i].split(",");
+		                    f.add(new Option(tmp[1],tmp[0]));
+		                }
+		            }
+		            else
+		            {
+		                alert("您所请求的页面有异常。");
+		            }
+		    }
+		}    
+</script>
+</body>
+</html>

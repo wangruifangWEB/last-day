@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<head>
+    <title>ckplayer应用</title>
+    <script src="js/jquery-1.5.2.min.js" type="text/javascript"></script>
+    <style type="text/css">
+        body
+        {
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <div style="margin: auto; text-align: center;">
+        <div id="a1">
+        </div>
+    </div>
+    <script src="ckplayer/ckplayer.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var flashvars = {
+            //此处设置要播放的路劲
+            f: 'http://movie.ks.js.cn/flv/other/1_0.flv',
+            c: 0,
+            b: 1,
+            my_title:'视频标题'
+        };
+        var video = ['http://movie.ks.js.cn/flv/other/1_0.mp4->video/mp4', 'http://www.ckplayer.com/webm/0.webm->video/webm', 'http://www.ckplayer.com/webm/0.ogv->video/ogg'];
+        CKobject.embed('ckplayer/ckplayer.swf', 'a1', 'ckplayer_a1', '700', '345', false, flashvars, video)
+
+
+        function closelights() {//关灯
+            $("body").css("background-color", "Black");
+        }
+        function openlights() {//开灯
+            $("body").css("background-color", "#eee");
+        }
+    </script>
+</body>
+</html>

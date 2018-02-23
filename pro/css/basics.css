@@ -1,0 +1,191 @@
+@charset "utf-8";
+/* CSS Document */
+body{
+	margin:0px;
+	padding:0px;
+	font-size:14px;
+}
+ul,p{
+	list-style-type:none;
+	margin:0px;
+	padding:0px;
+}
+a{
+	color:#222e3b;
+	text-decoration:none;
+}
+a:hover{
+	color:#af2023;
+}
+.right_border{
+	border-right:2px solid #222e3b;
+}
+img{
+	border:0px;
+}
+
+/*******************************站点公共部分CSS 开始***********************************/
+.banner{
+	height:330px;
+	background:url(../img/banner_bg.png) no-repeat;
+	position:relative;
+}
+.banner_logo{
+	position:absolute;
+	top:90px;
+	left:0px;
+}
+
+.banner_nav{
+	position:absolute;
+	bottom:10px;
+	left:0px;
+}
+.banner_nav ul li{
+	display:block;
+	float:left;
+	line-height:16px;
+	font-size:16px;
+	width:146px;
+	text-align:center;
+}
+.banner_nav ul li a:hover{
+	text-decoration:underline;
+}
+
+
+.bottom_copyright{
+	padding:20px;
+	min-height:50px;
+	line-height:25px;
+	font-size:12px;
+	color:#666;
+	background-color:#e5e0e0;
+}
+.bottom_copyright a{
+	color:#666;
+}
+
+/*********************左侧菜单 开始**********************/
+/*左侧菜单*/
+.sidebar-menu{
+  border-right: 1px solid #c4c8cb;
+}
+.sidebar-menu a:focus{
+	color:#222;
+	font-weight:600;
+}
+/*一级菜单*/
+.menu-first{
+	display:block;
+	width:100%;
+	line-height:40px;
+	padding-left:40px;
+	color:#FFF;
+	background-color: #0bbea9;
+	border-bottom:1px solid #17b19f;
+}
+/*一级菜单鼠标划过状态*/
+.menu-first:hover{
+	background-color:#00c7b0;
+	color:#000;
+	text-decoration: none;
+	border-bottom: 1px solid #17b19f;
+}
+/*二级菜单*/
+.menu-second li{
+	padding-left:50px;
+}
+.menu-second li a{
+  background-color: #0bbea9;
+  height:40px;
+  line-height:40px;
+  font-size: 12px;
+}
+/*二级菜单鼠标划过样式*/
+.menu-second li a:hover {
+  text-decoration: none;
+  background-color: #00c7b0;
+}
+/*二级菜单选中状态*/
+
+.menu-second li a:focus{
+	color:#222;
+}
+/*覆盖bootstrap的样式*/
+.nav-list,.nav-list li a{
+  padding: 0px;
+  margin: 0px;
+}
+/*********************左侧菜单 结束**********************/
+
+
+/*******************************站点公共部分CSS 结束***********************************/
+
+.height_1{
+	height:1px;
+}
+.height_2{
+	height:2px;
+}
+.height_3{
+	height:3px;
+}
+.height_4{
+	height:4px;
+}
+.height_5{
+	height:5px;
+}
+.height_6{
+	height:6px;
+}
+.height_7{
+	height:7px;
+}
+.height_8{
+	height:8px;
+}
+.height_9{
+	height:9px;
+}
+.height_10{
+	height:10px;
+}
+.height_15{
+	height:15px;
+}
+.height_20{
+	height:20px;
+}
+.height_30{
+	height:30px;
+}
+.height_40{
+	height:40px;
+}
+.height_50{
+	height:50px;
+}
+.height_60{
+	height:60px;
+}
+.height_70{
+	height:70px;
+}
+.height_80{
+	height:80px;
+}
+.height_90{
+	height:90px;
+}
+.height_100{
+	height:100px;
+}
+.height_200{
+	height:200px;
+}
+.height_300{
+	height:300px;
+}
+

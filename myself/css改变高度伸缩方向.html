@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .out{
+            width: 200px;
+            height: 300px;
+            position: relative;
+        }
+        .box{
+            height:300px;
+            width:20px;
+            background:red;
+            transition:all 0.5s;
+            position: absolute;
+            bottom: 0;
+        }
+        .box2{
+            top: 0;
+            right: 0;
+        }
+        .out:hover .box{
+            height:100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="out">
+        <div class="box"></div>
+        <div class="box2 box"></div>
+    </div>
+</body>
+</html>

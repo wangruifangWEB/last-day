@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<title>原生上拉加载及下拉刷新</title>
+	<script type="text/javascript" src="jquery.min.js"></script>
+	<style type="text/css">
+		body{
+			margin:0;
+			padding:0;
+		}
+		#container{
+			width: 100%;
+			border:1px solid red;
+		}
+		#container ul li{
+			list-style: none;
+			height:33%;
+			border-bottom: 2px solid pink;
+			font-size: 14px;
+			margin:15px 0;
+		}
+	</style>
+</head>
+<body>
+	<div id="container">
+		<ul>
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+		</ul>
+	</div>
+	<script type="text/javascript">
+		document.getElementById("container").addEventListener("touchstart",function(e)
+		{
+		    var _x=e.touches[0].pageX;
+		    var _y=e.touches[0].pageY;
+		   /* console.log("start",_x);*/
+		    console.log("start",_y);
+		})
+		document.getElementById("container").addEventListener("touchmove",function(e)
+		{
+		    var _x=e.touches[0].pageX;
+		    var _y=e.touches[0].pageY;
+		  /*  console.log("move",_x);  */
+		})
+		document.getElementById("container").addEventListener("touchend",function(e)
+		{
+		    var _x=e.changedTouches[0].pageX;
+		    var _y=e.changedTouches[0].pageY;
+		    console.log("end",_x);
+	
+		      for(var i=0;i<3;i++){
+		    	var lastText=$("#container ul li:last-child").html();
+		    	lastText++;
+		   		$("#container ul").append('<li>'+lastText+'</li>');
+		   	}
+		})
+	</script>
+	<script type="text/javascript">
+		/*$(document).ready(function() {
+            $(window).scroll(function() {
+                //$(document).scrollTop() 获取垂直滚动的距离
+                //$(document).scrollLeft() 这是获取水平滚动条的距离
+                if ($(document).scrollTop() <= 0) {
+                    alert("滚动条已经到达顶部");
+                }
+
+               	if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
+                    alert("滚动条已经到达底部为" + $(document).scrollTop());
+                }
+
+            });
+        });*/
+	</script>
+	<script type="text/javascript">
+		//cookie的读写
+		console.log(document.cookie);	//读取浏览器中的cookie
+		document.cookie='myname=liuzhiyu;path=/;domain=.baidu.com';	//	写入 cookie
+	</script>
+</body>
+</html>

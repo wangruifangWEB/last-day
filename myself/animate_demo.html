@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/animate.min.css"/>
+		<script src="js/jquery.min.js"></script>
+		<style>
+			span{
+				display:inline-block;
+				*display:inline-block;
+				zoom:1;
+				}
+			.bg{
+				width:300px;
+				height:20px;
+				border-radius:10px;
+				background:#3D3C3A;
+				}
+			.main{
+				height:20px;
+				border-radius:10px;
+				background:#55404C;
+				}
+		</style>
+	</head>
+	<body>
+	<button id="btn">10</button>
+	<script>
+	    $("#btn").click(function(){
+	        num=$(this).html();
+	        for(var i=0;i<num;i--){
+	        	 console.log(num);
+	        }
+	    })
+	</script>
+	</body>
+</html>

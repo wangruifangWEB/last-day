@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+	</head>
+	<body>
+		<div class="parent">
+			<div class="child"></div>
+		</div>
+		
+		<script>
+			//最简单的一道题
+			'11' * 2 	22
+    		'a8' * 3	NaN
+    		
+			//一道this的问题
+			var num = 10; //全局
+		    var obj = {
+		        num:8,//布局
+		        inner: {
+		            num: 6,//局部
+		            print: function () {
+		                console.log(this.num);  
+		        }
+		    }
+		    num = 888;
+		    obj.inner.print(); // 6
+		    var fn = obj.inner.print;
+		    fn(); //888
+		    (obj.inner.print)(); //6
+		    (obj.inner.print = obj.inner.print)(); //888 这个点没有太理解，虽然答对了
+		    
+		    //var和function的预解析问题,以及变量和function的先后顺序的问题
+		    // 以下代码执行输出结果是什么
+		    function b () {
+		        console.log(a);  function
+		        var a = 10;
+		        function a() {};  
+		        a = 100;
+		        console.log(a);  100
+		    }
+		    b();
+		
+		    function c () {
+		        console.log(a);  function
+		        function a() {};
+		        var a = 10;
+		        a = 100;
+		        console.log(a); 100
+		    }
+		    c();
+		
+		    (function d (num) {
+		        console.log(num); 100
+		        var num = 10;
+		    }(100))
+		
+		    (function e (num) {
+		        console.log(num); function
+		        var num = 10;
+		        function num () {};
+		    }(100))
+		
+		    (function f (num) {
+		        function num () {};
+		        console.log(num); function
+		        var num =10
+		        console.log(num); 10
+		    }(100))
+
+    //仍然是预解析(在与解析过程中还要考虑一下当前变量的作用于)
+	    function m () {
+	        console.log(a1); // underfined
+	        console.log(a2); // underfined
+	        console.log(b1); // underfined
+	        console.log(b2); // underfined
+	        if(false) {
+	            function b1 (){};
+	            var a1 = 10;
+	        }
+	        if(true) {
+	            function b2 (){};
+	            var a2 = 10;
+	        }
+	        console.log(a1); // underfined
+	        console.log(a2); // 10
+	        console.log(b1); // underfined
+	        console.log(b2); // function
+	    }
+	    m();
+	
+	    function n() {
+	        if(2>1) {
+	            arr = 10;
+	            brr = 10;
+	            let arr;
+	            var brr;
+	            console.log(arr); undefined
+	            console.log(brr); 10
+	        }
+	    }
+	    n(); // ReferenceError
+	    
+	/*	一个算法问题
+		有一个已经排序的数组，比方[1,4,6,9,11,15,18],给你一个新的数，插入到数组中，写一个function*/
+		//解答一：
+		function sortArray(num){
+			var arr=[1,4,6,9,11,15,18];
+			arr.push(num);
+			return arr;
+		}
+		sortArray(2);
+		
+		//解答二：函数自动执行(插入任意位置)
+		(function sortArr(num){
+			var arr=[1,4,6,9,11,15,18];
+			var a=arr.splice(2,1,'three');
+			return arr;
+		})();
+		
+		//解答三:扩展原生 JavaScript,那么可以将这个方法添加到数组原型(Array prototype)中:
+		Array.prototype.insert=function(index,item){
+			this.splice(index,0,item);
+		}
+		//引用
+		var num1=[1,2,3];
+		num1.insert(1,'good');
+		console.log(num1);
+		
+	/*5. 函数节流是什么，有什么优点（之前没有了解过这个概念，懵逼了）
+		函数节流的目的
+		
+		从字面上就可以理解，函数节流就是用来节流函数从而一定程度上优化性能的。
+		例如，DOM 操作比起非DOM 交互需要更多的内存和CPU 时间。
+		连续尝试进行过多的DOM 相关操作可能会导致浏览器挂起，
+		有时候甚至会崩溃。尤其在IE 中使用onresize 事件处理程序的时候容易发生，当调整浏览器大小的时候，
+		该事件会连续触发。在onresize 事件处理程序内部如果尝试进行DOM 操作，其高频率的更改可能会让浏览器崩溃。又例如，
+		我们常见的一个搜索的功能，
+		我们一般是绑定keyup事件，每按下一次键盘就搜索一次。
+		但是我们的目的主要是每输入一些内容搜索一次而已。为了解决这些问题，就可以使用定时器对函数进行节流。
+		
+		函数节流的原理
+	
+		某些代码不可以在没有间断的情况连续重复执行。
+		第一次调用函数，创建一个定时器，在指定的时间间隔之后运行代码。
+		当第二次调用该函数时，它会清除前一次的定时器并设置另一个。如果前一个定时器已经执行过了，
+		这个操作就没有任何意义。然而，如果前一个定时器尚未执行，其实就是将其替换为一个新的定时器。
+		目的是只有在执行函数的请求停止了一段时间之后才执行。
+	*/		
+	
+	/*6. 写一个方法，实现传入两个参数(parentNode, childNode),
+		要求如果childNode是parentNode的子孙节点，则返回为true，否则返回为false*/
+		function fn(parentNode,childNode){
+			if(parentNode.children(childNode)){
+				return false;
+			}
+			return true;
+		}
+		var parent=document.getElementsByClassName('parent');
+		var child=document.getElementsByClassName('child');
+		fn(parent,child);
+		
+		
+		/*7. dom事件流原理是什么，分为那几个阶段？
+		事件捕获 处于目标阶段 事件冒泡*/
+		
+		/*8. dom事件委托什么原理，有什么优缺点
+		事件委托原理:事件冒泡机制
+		
+		优点
+		1.可以大量节省内存占用，减少事件注册。比如ul上代理所有li的click事件就很不错。
+		2.可以实现当新增子对象时，无需再对其进行事件绑定，对于动态内容部分尤为合适
+		
+		缺点
+		事件代理的常用应用应该仅限于上述需求，如果把所有事件都用事件代理，可能会出现事件误判。即本不该被触发的事件被绑定上了事件。
+		* */
+		
+		
+		</script>
+	</body>
+</html>

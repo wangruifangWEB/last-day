@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title></title>
+		<script src="../js/jquery.min.js"></script>
+		<style>
+			ul{
+				list-style: none;
+			}
+			.txt{
+				color:pink;
+			}
+			input{
+				width:6rem;
+				height:1.2rem;
+			}
+		</style>
+	</head>
+	<body>
+		<input type="text" placeholder="请输入。。。"/>
+		<div>
+			<h2>遍历</h2>
+			<ul></ul>
+		</div>
+		
+		<script>
+			//定义数组
+			var current=0;
+			var arr=[1,-1,4,8,0];
+			//从小到大排序
+			var arrSort=arr.sort(function(a,b){return a-b;}); 
+			console.log('排完序之后的：'+arrSort);
+			//比如查0
+			var index = arr.indexOf(current);
+			var result = current-arr[index-1] < arr[index+1]-current ? arr[index-1] : arr[index+1];
+			console.log(result);
+		</script>
+	</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			/*如果需要去掉手机浏览器自带的长按响应事件，则需要在css文件中增加如下代码：*/
+			.touch_action{ 
+				-webkit-touch-callout:none;  
+				-webkit-user-select:none; 
+				-khtml-user-select:none;  
+				-moz-user-select:none; 
+				-ms-user-select:none;  
+				user-select:none; 
+			}
+		</style>
+	</head>
+	<body>
+		
+		<script>
+			//长按删除
+		       var time = 0;//初始化起始时间  
+				$("#imgDiv").on('touchstart', '.previewImg', function(e){  
+				    e.stopPropagation();  
+				    var index=$("#imgDiv").find(".image").index($(this));  
+				    time = setTimeout(function(){  
+				        showCloseImg(index);  
+				    }, 500);//这里设置长按响应时间  
+				});  
+				  
+				$("#imgDiv").on('touchend', '.previewImg', function(e){  
+				    e.stopPropagation();  
+				    clearTimeout(time);    
+				});  
+				  
+				function showCloseImg(index){  
+				    var e=$("#imgDiv").find(".image").eq(index);  
+				    $(".deleteImg").hide();  
+				    e.next().show();  
+				}  
+		</script>
+	</body>
+</html>

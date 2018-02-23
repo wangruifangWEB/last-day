@@ -1,0 +1,5 @@
+<!--index.wxml-->
+<view class="container">
+  <view id="nei" style="color:{{xx}};">{{zz}}</view>
+  <view bindtap="abc">dfd</view>
+</view>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="">
+		#video_c{ width:840px; height:353px;margin:0 auto;}
+	</style>
+</head>
+<body>
+	<div id="video_c"></div>
+	<script type="text/javascript" src="ckplayer.js"></script>
+	<script type="text/javascript">
+		var flashvars={
+		    f:'ckplayer/video/1_0.flv',
+		    p:0
+		    //i：'http://www.ckplayer.com/static/images/letitgo.jpg' //视频播放器初始图片地址，即封面图片，默认为空。
+		    };
+		var video=['ckplayer/video/1_0.mp4->video/mp4'];
+		CKobject.embed('ckplayer/ckplayer.swf','video_c','ckplayer_a1','100%','100%',false,flashvars,video);
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!--index.wxml-->
+<view class="container">
+
+ <view class="price_num">
+   <view class="price">¥31.8</view>
+   <view class="ctrl"> 
+     <view class="jian_num" 
+       style="display:{{show}}">
+       <view class="jian" bindtap="num1">-</view>
+       <view class="num">{{shnum}}</view>
+     </view>
+     <view class="jia" bindtap="num2">+</view>
+   </view>
+ </view>
+
+</view>

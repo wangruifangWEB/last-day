@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        
+        #ctn {
+            width: 600px;
+            min-height: 400px;
+            margin: 10px auto;
+            border: 1px solid #cccccc;
+        }
+        
+        #ctn p {
+            font-size: 30px;
+            text-align: center;
+        }
+        
+        #area {
+            width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        #textArea {
+            display: block;
+            width: 580px;
+            height: 130px;
+            padding: 10px;
+            border-radius: 3px;
+            resize: none;
+            font-size: 16px;
+        }
+        
+        #textArea:focus {
+            outline: none;
+        }
+        
+        #submit {
+            width: 80px;
+            height: 30px;
+            border: none;
+            background: #38f;
+            color: #fff;
+            border-radius: 3px;
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+        }
+        
+        .con {
+            height: 40px;
+            padding: 5px 10px;
+            border-bottom: 1px solid #cccccc;
+            position: relative;
+        }
+        
+        .con span {
+            position: absolute;
+            display: block;
+            padding: 5px;
+            background: pink;
+            color: #fff;
+            cursor: pointer;
+            right: 10px;
+            bottom: 5px;
+        }
+        
+        .con i {
+            position: absolute;
+            display: block;
+            left: 10px;
+            bottom: 5px;
+            font-size: 12px;
+            font-style: normal;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="ctn">
+        <p>暂无评论</p>
+    </div>
+    <div id="area">
+        <form action="">
+            <textarea name="text" id="textArea" maxlength="140"></textarea>
+            <input type="button" value="评论" id="submit">
+        </form>
+    </div>
+</body>
+<script>
+    $(document).ready(function () {
+        var $btn = $('#submit');
+        var $area = $('#textArea');
+        var $ctn = $('#ctn');
+        //添加评论
+        $btn.click(function () {
+                $val = $area.val();
+                var date = new Date();
+                if ($val != '') {
+                    $ctn.children('p').hide();
+                    var $con = $('<div class="con">' + $val + '<span>删除</span><i>' + date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日' + '</i></div>');
+                    $con.data('cooName', 'name' + (date - 0));
+                    $ctn.prepend($con);
+                    $.cookie('name' + (date - 0), $val, {
+                        expires: 1
+                    });
+                    $('.con').children('span').click(function () {
+                        $.cookie($(this).parent().data('cooName'), '', {
+                            expires: -1
+                        });
+                        $(this).parent().remove();
+                        if ($ctn.children('div').size() == 0) {
+                            $ctn.children('p').show();
+                        }
+                    });
+                    $area.val('')
+                } else {
+                    alert('内容不能为空!')
+                }
+            });
+            //获取评论
+        if (document.cookie) {
+            $ctn.children('p').hide();
+            var $coo = $.cookie();
+            for (var key in $coo) {
+                var date = new Date();
+                date.setTime(key.substring(4)-0)
+                var $con = $('<div class="con">' + $coo[key] + '<span>删除</span><i>' + date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日' + '</i></div>');
+                $con.data('cooName', key);
+                $ctn.prepend($con);
+                $('.con').children('span').click(function () {
+                    $.cookie($(this).parent().data('cooName'), '', {
+                        expires: -1
+                    });
+                    $(this).parent().remove();
+                    if ($ctn.children('div').size() == 0) {
+                        $ctn.children('p').show();
+                    }
+                })
+            }
+        }
+    })
+</script>
+
+</html>

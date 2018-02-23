@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta http-equiv="pragma" content="no-cache" />
+<style type="text/css">
+table{
+	width:100%;
+	margin:0px;
+	padding:0px;
+	position:absolute;
+	top:0px;
+	left:0px;
+}
+td{
+	margin:0px;
+	padding:0px;
+	display:inline-block;
+	text-align:center;
+	width:33.33%;
+	line-height:100px;
+	border:1px solid #CCC;
+}
+</style>
+<title>测试网页</title>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/basics.css" rel="stylesheet">
+</head>
+<body>
+	<hgroup>
+		<h1>My best blog post</h1>
+</hgroup>
+<div style="width:100%; overflow:hidden; white-space:nowrap;">
+	<table id="table_1" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td>111111</td>
+        <td>222222</td>
+        <td>333333</td>
+        <td>444444</td>
+      </tr>
+    </table>
+</div>
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/basics.js"></script>
+<script src="../dist/bundle.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	//全局变量，触摸开始位置
+	var startX = 0;//, startY = 0;
+	var tag = 0;
+	//touchstart ：手指放在一个DOM元素上。
+	//touchmove ：手指拖曳一个DOM元素
+	//touchend ：手指从一个DOM元素上移开
+	$("#table_1").on("touchstart", function(e) {
+	    e.preventDefault();
+	    startX = e.originalEvent.changedTouches[0].pageX;
+	    //startY = e.originalEvent.changedTouches[0].pageY;
+	});
+	$("#table_1").on("touchend", function(e) {
+		e.preventDefault();
+		moveEndX = e.originalEvent.changedTouches[0].pageX,
+		//moveEndY = e.originalEvent.changedTouches[0].pageY,
+		X = moveEndX - startX;
+		//Y = moveEndY - startY;
+
+		if ( X > 0 ) {
+			//测试滑动效果是向左滑动
+			$('#table_1').animate({left:'0px'},300);
+		}
+		if ( X < 0 ) {
+			//alert(tag);
+			tag++;
+			//测试滑动效果是向右滑动
+			$('#table_1').animate({left:"-"+$(window).width()+'px'},300);
+		}
+	});
+});
+</script>
+</body>
+</html>

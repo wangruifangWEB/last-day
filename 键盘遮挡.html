@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			  $(function() {
+		        // 解决输入法遮挡
+		        var timer = null;
+		        $('.bInput').on('focus', function() {
+		            clearInterval(timer);
+		            var index = 0;
+		            timer = setInterval(function() {
+		                if(index>5) {
+		                    $('body').scrollTop(1000000);
+		                    clearInterval(timer);
+		                }
+		                index++;
+		            }, 50)
+		        })
+		    });
+
+		</script>
+	</body>
+</html>

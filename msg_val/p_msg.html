@@ -1,0 +1,199 @@
+<html>  
+<head>  
+    <meta charset="utf-8">  
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">  
+    <title>绑定手机号</title>  
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">  
+    <link rel="shortcut icon" href="/favicon.ico">  
+    <meta name="apple-mobile-web-app-capable" content="yes">  
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">  
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">  
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">  
+    <link rel="stylesheet" href="${URLPrefix.statics}/css-sui/base.css">  
+    <link rel="stylesheet" href="${URLPrefix.statics}/css-sui/my/login.css">  
+</head>  
+<body>  
+<div class="page-group">  
+    <div class="page page-current">  
+        <!--header start-->  
+        <header class="bar bar-nav headerBar">  
+            <a class="icon icon-iconfontback pull-left back"></a>  
+            <h1 class="title">绑定手机号</h1>  
+        </header>  
+        <!--header end-->  
+          
+        <div class="content">  
+            <div class="list-block loginBox">  
+            <form action="#" method="post" id="bindPhone" name="bindPhone">  
+                <ul>  
+                    <!-- Text inputs -->  
+                    <li>  
+                        <div class="item-content">  
+                            <div class="item-inner">  
+                                <div class="item-title label">手机号</div>  
+                                <div class="item-input">  
+                                    <input type="text" placeholder="请输入手机号码" class="userTel" value="" name="mobile" id="mobile">  
+                                </div>  
+                            </div>  
+                        </div>  
+                    </li>  
+                    <li>  
+                        <div class="item-content">  
+                            <div class="item-inner">  
+                                <div class="item-title label">验证码</div>  
+                                <div class="item-input">  
+                                    <input type="text" placeholder="请输入验证码" class="userCode" value="" maxlength="20" name="verifyCode" id="verifyCode">  
+                                </div>  
+                                  
+                                <input type="hidden"  value="${unionLoginId!''}" name="unionLoginId" id="unionLoginId">  
+                                <input type="hidden"  value="${returnUrl!''}"  name="returnUrl" id="returnUrl">  
+                                <div class="item-button">  
+                                    <button class="red button" id="msg-num-btn" type="button">获取验证码</button>  
+                                </div>  
+                            </div>  
+                        </div>  
+                    </li>  
+                </ul>  
+            </div>  
+            <div class="content-block">  
+                <div class="row">  
+                    <div class="col-100"><input type="button" value="确认绑定" id="bind" class="button button-big button-fill button-danger disabled"></div>  
+                </div>  
+            </div>  
+    </form>  
+        </div>  
+    </div>  
+     
+</div>  
+  
+<script src="${URLPrefix.statics}/js/base/require.js" data-main="${URLPrefix.statics}/js-sui/my/bindPhone"></script>  
+<script type="text/javascript">
+	require.config({  
+	    paths: {  
+	        "base": "../../js/base/base",  
+	        "template": "../../js/base/template"  
+		    }  
+		});  
+		define(['base','template'], function (base,template){  
+	  
+	      
+	    function sendVerifyCode() {  
+	        $.ajax({  
+	            type: "POST",  
+	            dataType: "json",  
+	            url: URLPrefixJs.statics+"/login/sendRegisterVerifyCode.do",  
+	            data: "mobile="+$('#mobile').val(),  
+	            success: function(data){  
+	                if (data=="0"){  
+	                    $.toast('发送短信成功，请注意接收');  
+	                    var countdown=59;  
+	                    var o=$("#msg-num-btn");  
+	                    var iCount = setInterval (function () {       
+	                        o.text(countdown-- +"s后重试");  
+	                        o.addClass("disabled");  
+	                        if(countdown==0){  
+	                             o.removeClass("disabled");  
+	                             o.text("获取验证码");  
+	                             clearInterval(iCount);//清除倒计时  
+	                             countdown=60;//设置倒计时时间   
+	                        };  
+	                    }, 1000);  
+	                } else if (data=="005") {  
+	                    $.toast('发送短信间隔需大于60秒');  
+	                } else {  
+	                    $.toast('发送短信失败，请重试');  
+	                }  
+	            }  
+	        });  
+	    }  
+	    $("#msg-num-btn").click(function(){  
+	        var d = $(this);  
+	        if(d.hasClass("disabled")){  
+	            return;  
+	        }  
+	        if($(".userTel").val()==""){  
+	             $.toast('未填写手机号', 2000)  
+	             return false;  
+	        }  
+	        sendVerifyCode();  
+	    });  
+	  
+	      
+	    function checkMobile(){  
+	        var mobileReg = /^(13|14|15|17|18)[0-9]{8}[0-9]$/;  
+	        var mobile = $('#mobile').val();  
+	        if(!mobileReg.test(mobile)){  
+	            $.toast('未输入手机号或手机格式有误');  
+	            return false;  
+	        }  
+	        return true;  
+	    }  
+	  
+	    function checkVerifyCode(){  
+	        var verifyCodeReg = /^[0-9]{6}$/;  
+	        var verifyCode = $('#verifyCode').val();  
+	        if(!verifyCodeReg.test(verifyCode)){  
+	            $.toast('未输入验证码或验证码格式有误');  
+	            return false;  
+	        }  
+	        return true;  
+	    }  
+	      
+	    $('#bind').click(function(){  
+	        var d = $(this);  
+	        if(d.hasClass("disabled")){  
+	            return  false;  
+	        }  
+	        if (!checkMobile()){  
+	            return false;  
+	        }  
+	        if (!checkVerifyCode()){  
+	            return false;  
+	        }  
+	        $.ajax({  
+	            type: "POST",  
+	            url: URLPrefixJs.statics+"/unionLogin/unionLoginByMobile.do",  
+	            dataType: "json",  
+	            data: $('#bindPhone').serialize(),  
+	            success: function(data){  
+	                if (data.code=="0") {  
+	                    window.location=$('#returnUrl').val();  
+	                }  else if (data.code=="002") {  
+	                    $.toast('手机号已被注册');  
+	                } else if (data.code=="003") {  
+	                    $.toast('验证码过期');  
+	                } else if (data.code=="004") {  
+	                    $.toast('验证码不正确');  
+	                } else if (data.code=="100") {  
+	                    $.toast('联合登录失败');  
+	                } else if (data.code=="101") {  
+	                    $.alert(data.msg,function(){  
+	                        window.location=URLPrefixJs.statics+"/login/toLogin.do";  
+	                    });  
+	                }  
+	            }  
+	        });  
+	    });  
+	  
+	  
+	    var timer=-1;  
+	    
+	    $(".userTel,.userCode").bind("keyup",function(event){  
+	        var val=$(this).val();  
+	        var mobileReg = /^(13|14|15|17|18)[0-9]{8}[0-9]$/;  
+	        var mobile = $('#mobile').val();  
+	        var verifyCodeReg = /^[0-9]{6}$/;  
+	        var verifyCode = $('#verifyCode').val();  
+	        if(mobileReg.test(mobile)&&verifyCodeReg.test(verifyCode)){  
+	            $("#bind").removeClass("disabled");  
+	            return true;  
+	        }else{  
+	            $("#bind").addClass("disabled");  
+	            return false;  
+	        }  
+	    })  
+	  
+	});
+</script>
+</body>  
+</html> 
